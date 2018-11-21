@@ -44,4 +44,28 @@ public class RestHelperMethods {
 		return "CV Downaloaded Successfully";
 	}
 	
+	static public String updateUsername(User userObjectWithNewDetails, User userObjectWithOldDetails) {
+		if(!isNull(userObjectWithNewDetails.getUserName())) {
+			userObjectWithOldDetails.setUserName(userObjectWithNewDetails.getUserName());
+			return "User's userName updated";
+		}		
+		return "No Changes to userName to be made";			
+	}
+	
+	static public String updatePassword(User userObjectWithNewDetails, User userObjectWithOldDetails) {
+		if(!isNull(userObjectWithNewDetails.getPassword())) {
+			userObjectWithOldDetails.setPassword(userObjectWithNewDetails.getPassword());
+			return "User's password updated";
+		}		
+		return "No Changes to password to be made";			
+	}
+	
+	static public String updateAccountType(User userObjectWithNewDetails, User userObjectWithOldDetails) {
+		if(!isNull(userObjectWithNewDetails.getAccountType())) {
+			userObjectWithOldDetails.setAccountType(userObjectWithNewDetails.getAccountType());
+			return "User's accountType updated";
+		}		
+		return "No Changes to accountType to be made";			
+	}
+	
 }
