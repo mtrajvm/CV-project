@@ -23,6 +23,7 @@ class Show extends Component {
     console.log(id);
     axios.delete('/users/'+id)
       .then((result) => {
+
         this.props.history.push("/ShowAll")
       });
   }

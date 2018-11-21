@@ -38,7 +38,6 @@ nextPath = (path) => {
   this.props.history.push(path);
 }
   render() {
-  
     return (
       <div class="container">
         <div class="panel panel-default">
