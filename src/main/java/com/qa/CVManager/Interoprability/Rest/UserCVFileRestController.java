@@ -1,11 +1,13 @@
 package com.qa.CVManager.Interoprability.Rest;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Optional;
 
 import org.bson.BsonBinarySubType;
 import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,4 +43,49 @@ public class UserCVFileRestController {
 		return "Success";
 	}
 
+	@GetMapping("/cvdownload/{id}")
+	public String retrieveFile(@PathVariable String id) {
+		Optional<User> optUser = userRepo.findById(id);
+		User c = optUser.get();
+		Binary cvFile = c.getCvPDFFile();
+		if (cvFile != null) {
+			FileOutputStream fileOutputStream = null;
+			try {
+				fileOutputStream = new FileOutputStream("test.pdf");
+				fileOutputStream.write(cvFile.getData());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "failure";
+			} finally {
+				if (fileOutputStream != null) {
+					try {
+						fileOutputStream.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						return "Failure";
+					}
+				}
+			}
+
+		}
+		else {
+			return "CV Doesn't Exist For Download";
+		}
+
+		return "CV Downaloaded";
+	}
+
+	@GetMapping("/cvdelete/{id}")
+	public String singleFileDelete(@PathVariable String id) {
+		
+		
+		Optional<User> optUser = userRepo.findById(id);
+		User c = optUser.get();
+		c.setCvPDFFile(null);
+		userRepo.save(c);
+
+		return "CV Removed";
+	}
 }
