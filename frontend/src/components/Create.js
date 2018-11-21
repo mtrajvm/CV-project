@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import {onChange} from './helper/Helper';
 
 class Create extends Component {
   emptyValues = {
@@ -15,21 +16,10 @@ class Create extends Component {
     this.state = {
         details: this.emptyValues     
     }
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+
   }
 
 
-
-
-  onChange = (e) => {
-    const target = e.target;
-    const value = target.value;
-    const name = target.name;
-    let details = {...this.state.details};
-    details[name] = value;
-    this.setState({details});
-  }
 
   onSubmit = (e) => {
     e.preventDefault();
@@ -63,15 +53,15 @@ class Create extends Component {
             <form onSubmit={this.onSubmit}>
               <div class="form-group">
                 <label for="isbn">User Name:</label>
-                <input type="text" class="form-control" name="userName"  value={details.userName} onChange={this.onChange} placeholder="Name" />
+                <input type="text" class="form-control" name="userName" onChange={event => onChange(event,this.state.details)} placeholder="Name" />
               </div>
               <div class="form-group">
                 <label for="title">Password:</label>
-                <input type="text" class="form-control" name="password"  value={details.password}  onChange={this.onChange} placeholder="Password" />
+                <input type="text" class="form-control" name="password"   onChange={event => onChange(event,this.state.details)} placeholder="Password" />
               </div>
               <div class="form-group">
                 <label for="author">AccountType:</label>
-                <input type="text" class="form-control" name="accountType" value={details.accountType}  onChange={this.onChange} placeholder="AccountType" />
+                <input type="text" class="form-control" name="accountType"  onChange={event => onChange(event,this.state.details)} placeholder="AccountType" />
               </div>
               <button type="submit" class="btn btn-default">Submit</button>
             </form>
