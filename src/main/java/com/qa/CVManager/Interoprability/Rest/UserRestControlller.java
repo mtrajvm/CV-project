@@ -2,6 +2,8 @@ package com.qa.CVManager.Interoprability.Rest;
 
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,22 +27,26 @@ public class UserRestControlller {
 
 		@GetMapping("/users")
 	    public Iterable<User> user() {
+			System.out.println("get all");
 	        return userRepo.findAll();
 	    }
 
 	    @PostMapping("/user")
-	    public User save(@RequestBody User user) {
+	    public User save(@Valid @RequestBody User user) {
+			System.out.println("post ");
 	    	userRepo.save(user);
 	        return user;
 	    }
 
 		@GetMapping("/user/{id}")
 	    public Optional<User> show(@PathVariable String id) {
+			System.out.println("get id");
 	        return userRepo.findById(id);
 	    }
 
 		@PutMapping("/user/{id}")
 	    public User update(@PathVariable String id, @RequestBody User user) {
+			System.out.println("put");
 	        Optional<User> optUser = userRepo.findById(id);
 	        User c = optUser.get();
 	        if(user.getUserName() != null)
@@ -54,11 +60,9 @@ public class UserRestControlller {
 	    }
 
 		@DeleteMapping("/user/{id}")
-	    public String delete(@PathVariable String id) {
-	        Optional<User> optUser = userRepo.findById(id);
-	        User user = optUser.get();
-	        userRepo.delete(user);
-
+	    public String delete( @PathVariable String id) {
+			System.out.println(id);
+			userRepo.deleteById(id);
 	        return "";
 	    }
 

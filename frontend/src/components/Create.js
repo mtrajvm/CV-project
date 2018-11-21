@@ -4,39 +4,52 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 class Create extends Component {
-
-  constructor() {
-    super();
-    this.state = {
+  emptyValues = {
       userName: '',
       password: '',
-      accountType: '',
-    };
+      accountType: '',  
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+        details: this.emptyValues     
+    }
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
+
+
+
+
   onChange = (e) => {
-    const state = this.state;
-    this.setState(state);
+    const target = e.target;
+    const value = target.value;
+    const name = target.name;
+    let details = {...this.state.details};
+    details[name] = value;
+    this.setState({details});
   }
 
   onSubmit = (e) => {
     e.preventDefault();
-    const { userName, password, accountType} = this.state;
-      console.log(userName);
-      console.log(password);
-    axios.post('/api/user', { 
+    const { details} = this.state;
+    console.log(details);
+    fetch('/api/user', {   
       method : 'POST',
       headers: {
-        'Content-Type' : 'application/json'
+        'Content-Type' : 'application/json',
+        'Accept' : 'application/json'
       },
-      body: {userName, password, accountType}
-    })
-      .then((result) => {
-        this.props.history.push("/")
-      });
+      body: JSON.stringify(details)
+    });
+
+    this.props.history.push("/")
+     
   }
 
   render() {
-    const { userName, password, accountType} = this.state;
+    const { details} = this.state;
     return (
       <div class="container">
         <div class="panel panel-default">
@@ -50,15 +63,15 @@ class Create extends Component {
             <form onSubmit={this.onSubmit}>
               <div class="form-group">
                 <label for="isbn">User Name:</label>
-                <input type="text" class="form-control" name="userName"  onChange={this.onChange} placeholder="Name" />
+                <input type="text" class="form-control" name="userName"  value={details.userName} onChange={this.onChange} placeholder="Name" />
               </div>
               <div class="form-group">
                 <label for="title">Password:</label>
-                <input type="text" class="form-control" name="password"  onChange={this.onChange} placeholder="Password" />
+                <input type="text" class="form-control" name="password"  value={details.password}  onChange={this.onChange} placeholder="Password" />
               </div>
               <div class="form-group">
                 <label for="author">AccountType:</label>
-                <input type="text" class="form-control" name="accountType"  onChange={this.onChange} placeholder="AccountType" />
+                <input type="text" class="form-control" name="accountType" value={details.accountType}  onChange={this.onChange} placeholder="AccountType" />
               </div>
               <button type="submit" class="btn btn-default">Submit</button>
             </form>

@@ -1,42 +1,50 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-
+import {Button, Container, Form, FormGroup, Input, Label} from 'reactstrap';
 class Edit extends Component {
+
+    emptyValues = {
+      userName: '',
+      password: '',
+      accountType: '',  
+  };
 
   constructor(props) {
     super(props);
     this.state = {
-      user: {}
-    };
+        details: this.emptyValues     
+    }
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
-  componentDidMount() {
-    axios.get('/users/'+this.props.match.params.id)
-      .then(res => {
-        this.setState({ contact: res.data });
-        console.log(this.state.user);
-      });
+ onChange = (e) => {
+    const target = e.target;
+    const value = target.value;
+    const name = target.name;
+    let details = {...this.state.details};
+    details[name] = value;
+    this.setState({details});
   }
 
-  onChange = (e) => {
-    const state = this.state.user
-    state[e.target.name] = e.target.value;
-    this.setState({user:state});
-  }
 
-  onSubmit = (e) => {
-    e.preventDefault();
-
-    const { userName, password, accountType} = this.state.user;
-
-    axios.put('/users/'+this.props.match.params.id, { userName, password, accountType})
-      .then((result) => {
-        this.props.history.push("/show/"+this.props.match.params.id)
-      });
+  onSubmit = (id) => {
+    const { details} = this.state;
+    console.log(details);
+    fetch('/api/user/' + id, {   
+      method : 'PUT',
+      headers: {
+        'Content-Type' : 'application/json',
+        'Accept' : 'application/json'
+      },
+      body: JSON.stringify(details)
+    }).then(this.props.history.push("/ShowAll"));
+     
   }
 
   render() {
+    const { details} = this.state;
     return (
       <div class="container">
         <div class="panel panel-default">
@@ -46,21 +54,21 @@ class Edit extends Component {
             </h3>
           </div>
           <div class="panel-body">
-            <h4><Link to={`/show/${this.state.user.id}`}><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> User List</Link></h4>
-            <form onSubmit={this.onSubmit}>
+            <h4><Link to="/ShowAll"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Users List</Link></h4>
+            <form onSubmit={()=> this.onSubmit(this.props.match.params.id)}>
               <div class="form-group">
-                <label for="userName">UserName:</label>
-                <input type="text" class="form-control" name="userName" value={this.state.user.name} onChange={this.onChange} placeholder="UserName" />
+                <label for="isbn">User Name:</label>
+                <input type="text" class="form-control" name="userName"  value={details.userName} onChange={this.onChange} placeholder="Name" />
               </div>
               <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="text" class="form-control" name="password" value={this.state.user.address} onChange={this.onChange} placeholder="Password" />
+                <label for="title">Password:</label>
+                <input type="text" class="form-control" name="password"  value={details.password}  onChange={this.onChange} placeholder="Password" />
               </div>
               <div class="form-group">
-                <label for="accountType">AccountType:</label>
-                <input type="text" class="form-control" name="accountType" value={this.state.user.city} onChange={this.onChange} placeholder="AccountType" />
+                <label for="author">AccountType:</label>
+                <input type="text" class="form-control" name="accountType" value={details.accountType}  onChange={this.onChange} placeholder="AccountType" />
               </div>
-              <button type="submit" class="btn btn-default">Update</button>
+              <button type="submit" class="btn btn-default">Submit</button>
             </form>
           </div>
         </div>

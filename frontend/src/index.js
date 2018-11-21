@@ -7,7 +7,7 @@ import './App.css';
 import Edit from './components/Edit';
 import Create from './components/Create';
 import Show from './components/Show';
-
+import 'bootstrap/dist/css/bootstrap.css';
 ReactDOM.render(
   <Router>
       <div>

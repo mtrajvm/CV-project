@@ -11,16 +11,18 @@ import Home from './components/Home';
 class App extends Component {
   render() {
     return (
-      
+     <div> 
+      <div>HELLO THERE </div>
       <Router>
         <Switch>
           <Route path='/' exact={true} component={Home}/>
           <Route path='/create' exact={true} component={Create}/>
-          <Route path='/Show' exact={true} component={Show}/>
+          <Route path='/Show/:id' exact={true} component={Show}/>
           <Route path='/ShowAll' exact={true} component={UserList}/>
-          <Route path='/edit' exact={true} component={Edit}/>
+          <Route path='/edit/:id' exact={true} component={Edit}/>
          </Switch>
-      </Router>    
+      </Router> 
+      </div>   
     );
   }
 }
