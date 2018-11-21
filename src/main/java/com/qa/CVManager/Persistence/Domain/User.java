@@ -1,5 +1,6 @@
 package com.qa.CVManager.Persistence.Domain;
 
+import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,9 +13,19 @@ public class User {
 	private String userName;
 	private String password;
 	private String accountType;
+	private Binary cvPDFFile;
+
 	
 	public User() {
 		super();
+	}
+
+	public Binary getCvPDFFile() {
+		return cvPDFFile;
+	}
+
+	public void setCvPDFFile(Binary cvPDFFile) {
+		this.cvPDFFile = cvPDFFile;
 	}
 
 	public User( String userName, String password, String accountType) {
