@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-
+import Edit from './Edit';
 class UserList extends Component {
 
   constructor(props) {
@@ -19,7 +19,24 @@ class UserList extends Component {
         console.log(this.state.users);
       });
   }
+    
+remove = (id) =>{
+  console.log(id);
+  fetch('/api/user/'+id,{
+    method : 'delete',
+         headers: {
+        'Content-Type' : 'application/json',
+        'Accept' : 'application/json'
+      }
+  }).then(()=>{
+    let updateUsers = [...this.state.users].filter(i => i.id !==id);
+    this.setState({users:updateUsers});
+  });
+}
 
+nextPath = (path) => {
+  this.props.history.push(path);
+}
   render() {
     return (
       <div class="container">
@@ -40,11 +57,13 @@ class UserList extends Component {
                 </tr>
               </thead>
               <tbody>
-                {this.state.users.map(c =>
+                {this.state.users.map(user =>
                   <tr>
-                    <td><Link to={`/show/${c.id}`}>{c.userName}</Link></td>
-                    <td>{c.password}</td>
-                    <td>{c.accountType}</td>
+                    <td><Link to={`/Show/${user.id}`}>{user.userName}</Link></td>
+                    <td>{user.password}</td>
+                    <td>{user.accountType}</td>
+                    <td><button onClick={()=> this.remove(user.id)}>delete</button></td>
+                    <td><button onClick={()=> this.nextPath('/edit/'+ user.id)}>update</button></td>
                   </tr>
                 )}
               </tbody>

@@ -23,7 +23,8 @@ class Show extends Component {
     console.log(id);
     axios.delete('/users/'+id)
       .then((result) => {
-        this.props.history.push("/")
+
+        this.props.history.push("/ShowAll")
       });
   }
 
@@ -37,7 +38,7 @@ class Show extends Component {
             </h3>
           </div>
           <div class="panel-body">
-            <h4><Link to="/"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Users List</Link></h4>
+            <h4><Link to="/ShowAll"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Users List</Link></h4>
             <dl>
               <dt>UserName:</dt>
               <dd>{this.state.user.userName}</dd>
