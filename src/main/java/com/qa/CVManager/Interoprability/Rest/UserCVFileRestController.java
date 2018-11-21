@@ -25,67 +25,77 @@ public class UserCVFileRestController {
 	@Autowired
 	UserRepository userRepo;
 
-	@PostMapping("/cvupload/{id}")
-	public String singleFileUpload(@RequestParam("file") MultipartFile multipart, @PathVariable String id) {
-
-		try {
-			Optional<User> optUser = userRepo.findById(id);
-			User c = optUser.get();
-			c.setCvPDFFile(new Binary(BsonBinarySubType.BINARY, multipart.getBytes()));
-			userRepo.save(c);
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return "Failure";
+	@PostMapping("/cvupload/{idOfUser}")
+	public String singleFileUpload(@RequestParam("file") MultipartFile multipart, @PathVariable String idOfUser) {
+	
+		Optional<User> optUser = userRepo.findById(idOfUser);
+		if(optUser.isPresent()) {				
+			try {
+				User userObject = optUser.get();
+				userObject.setCvPDFFile(new Binary(BsonBinarySubType.BINARY, multipart.getBytes()));
+				userRepo.save(userObject);
+			} catch (IOException e) {
+				e.printStackTrace();
+				return "Failed to get Byte data from MultipartFile: " + multipart.getOriginalFilename();
+			}
 		}
-
-		return "Success";
+		else {
+			return "No User Found With ID: " + idOfUser;
+		}
+		
+		return "Success, added MultipartFile: " + multipart.getOriginalFilename() + ", to User with ID : " + idOfUser;
 	}
 
-	@GetMapping("/cvdownload/{id}")
-	public String retrieveFile(@PathVariable String id) {
-		Optional<User> optUser = userRepo.findById(id);
-		User c = optUser.get();
-		Binary cvFile = c.getCvPDFFile();
-		if (cvFile != null) {
-			FileOutputStream fileOutputStream = null;
-			try {
-				fileOutputStream = new FileOutputStream("test.pdf");
-				fileOutputStream.write(cvFile.getData());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return "failure";
-			} finally {
-				if (fileOutputStream != null) {
-					try {
-						fileOutputStream.close();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-						return "Failure";
+	@GetMapping("/cvdownload/{idOfUser}")
+	public String retrieveFile(@PathVariable String idOfUser) {
+		Optional<User> optUser = userRepo.findById(idOfUser);
+		if(optUser.isPresent()) {	
+			User userObject = optUser.get();
+			Binary cvFile = userObject.getCvPDFFile();
+			if (cvFile != null) {
+				FileOutputStream fileOutputStream = null;
+				try {
+					fileOutputStream = new FileOutputStream("test.pdf");
+					fileOutputStream.write(cvFile.getData());
+				} catch (IOException e) {
+					e.printStackTrace();
+					return "Failure to get data from Binary file";
+				} finally {
+					if (fileOutputStream != null) {
+						try {
+							fileOutputStream.close();
+						} catch (IOException e) {
+							e.printStackTrace();
+							return "Failure to close file Output Stream";
+						}
 					}
 				}
 			}
-
+			else {
+				return "CV Doesn't Exist For Download";
+			}
+			
 		}
 		else {
-			return "CV Doesn't Exist For Download";
+			return "No User Found With ID: " + idOfUser;
 		}
-
+		
 		return "CV Downaloaded";
 	}
 
-	@GetMapping("/cvdelete/{id}")
-	public String singleFileDelete(@PathVariable String id) {
+	@GetMapping("/cvdelete/{idOfUser}")
+	public String singleFileDelete(@PathVariable String idOfUser) {
+	
+		Optional<User> optUser = userRepo.findById(idOfUser);
+		if(optUser.isPresent()) {					
+			User userObject = optUser.get();
+			userObject.setCvPDFFile(null);
+			userRepo.save(userObject);			
+		}
+		else {
+			return "No User Found With ID: " + idOfUser;
+		}
 		
-		
-		Optional<User> optUser = userRepo.findById(id);
-		User c = optUser.get();
-		c.setCvPDFFile(null);
-		userRepo.save(c);
-
-		return "CV Removed";
+		return "Success, deleted cv file blonging to User with ID : " + idOfUser;
 	}
 }
