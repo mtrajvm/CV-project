@@ -10,7 +10,7 @@ http://www.mulesoft.org/schema/mule/smtp http://www.mulesoft.org/schema/mule/smt
 http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
 http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd">
     <http:listener-config name="HTTP_Listener_Configuration" host="localhost" port="8081" doc:name="HTTP Listener Configuration"/>
-    <smtp:gmail-connector name="Gmail" validateConnections="true" doc:name="Gmail"/>
+    <smtp:gmail-connector name="Gmail" validateConnections="true" doc:name="Gmail" contentType="text/html"/>
     <flow name="email_jsonFlow">
         <http:listener config-ref="HTTP_Listener_Configuration" path="/email" doc:name="HTTP"/>
         <json:json-to-object-transformer returnClass="java.util.HashMap" doc:name="JSON to Object"/>
@@ -22,18 +22,21 @@ http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/jso
             <when expression="#[flowVars.Method=='POST']">
                 <set-payload value="The user #[flowVars.UserName] has uploaded their CV as a pdf with file name &quot;#[flowVars.FileName]&quot;" doc:name="POST"/>
                 <smtp:outbound-endpoint host="smtp.gmail.com" user="jm1995111@gmail.com" password="Quay022!" connector-ref="Gmail" to="hardscrummers@gmail.com" from="jm1995111@gmail.com" subject="New CV Uploaded" responseTimeout="10000" doc:name="New CV email"/>
+                <parse-template location="C:\Users\Admin\AnypointStudio\workspace\email_json\src\main\resources\UploadCVEmail.html" doc:name="New CV Template"/>
                 <smtp:outbound-endpoint host="smtp.gmail.com" user="jm1995111@gmail.com" password="Quay022!" connector-ref="Gmail" to="#[flowVars.UserEmail]" from="jm1995111@gmail.com" subject="New CV uploaded" responseTimeout="10000" doc:name="Email to User"/>
                 <set-payload value="Success" doc:name="Success"/>
             </when>
             <when expression="#[flowVars.Method=='PUT']">
                 <set-payload value="The user #[flowVars.UserName] has updated their CV which has file name of &quot;#[flowVars.FileName]&quot;" doc:name="PUT"/>
                 <smtp:outbound-endpoint host="smtp.gmail.com" user="jm1995111@gmail.com" password="Quay022!" connector-ref="Gmail" to="hardscrummers@gmail.com" from="jm1995111@gmail.com" subject="CV Updated" responseTimeout="10000" doc:name="Updated CV email"/>
+                <parse-template location="C:\Users\Admin\AnypointStudio\workspace\email_json\src\main\resources\UpdateCVEmail.html" doc:name="Updated CV Template"/>
                 <smtp:outbound-endpoint host="smtp.gmail.com" user="jm1995111@gmail.com" password="Quay022!" connector-ref="Gmail" to="#[flowVars.UserEmail]" from="jm1995111@gmail.com" subject="CV Updated" responseTimeout="10000" doc:name="Email to User"/>
                 <set-payload value="Success" doc:name="Success"/>
             </when>
             <when expression="#[flowVars.Method=='DELETE']">
                 <set-payload value="The user #[flowVars.UserName] has deleted the CV which had file name of &quot;#[flowVars.FileName]&quot;" doc:name="DELETE"/>
                 <smtp:outbound-endpoint host="smtp.gmail.com" user="jm1995111@gmail.com" password="Quay022!" connector-ref="Gmail" to="hardscrummers@gmail.com" from="jm1995111@gmail.com" subject="CV Deleted" responseTimeout="10000" doc:name="Deleted CV email"/>
+                <parse-template location="C:\Users\Admin\AnypointStudio\workspace\email_json\src\main\resources\DeleteCVEmail.html" doc:name="Deleted CV template"/>
                 <smtp:outbound-endpoint host="smtp.gmail.com" user="jm1995111@gmail.com" password="Quay022!" connector-ref="Gmail" to="#[flowVars.UserEmail]" from="jm1995111@gmail.com" subject="CV Deleted" responseTimeout="10000" doc:name="Email to User"/>
                 <set-payload value="Success" doc:name="Success"/>
             </when>
