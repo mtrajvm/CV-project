@@ -27,7 +27,7 @@ public class UserCVFileRestController {
 	@PostMapping("/cvupload/{idOfUser}")
 	public String singleFileUpload(@RequestParam("file") MultipartFile multipart, @PathVariable String idOfUser) {
 
-		User userObject = RestHelperMethods.getUserIfExists(userRepo, idOfUser);
+		User userObject = RestHelperMethods.getUserIfExistsByUserID(userRepo, idOfUser);
 		if (!RestHelperMethods.isNull(userObject)) {
 			try {
 				userObject.setCvPDFFile(new Binary(BsonBinarySubType.BINARY, multipart.getBytes()));
@@ -45,7 +45,7 @@ public class UserCVFileRestController {
 
 	@GetMapping("/cvdownload/{idOfUser}")
 	public String retrieveFile(@PathVariable String idOfUser) {
-		User userObject = RestHelperMethods.getUserIfExists(userRepo, idOfUser);
+		User userObject = RestHelperMethods.getUserIfExistsByUserID(userRepo, idOfUser);
 		if (!RestHelperMethods.isNull(userObject)) {
 			Binary cvFile = userObject.getCvPDFFile();
 			if (!RestHelperMethods.isNull(cvFile)) {
@@ -63,7 +63,7 @@ public class UserCVFileRestController {
 
 	@GetMapping("/cvdelete/{idOfUser}")
 	public String singleFileDelete(@PathVariable String idOfUser) {
-		User userObject = RestHelperMethods.getUserIfExists(userRepo, idOfUser);
+		User userObject = RestHelperMethods.getUserIfExistsByUserID(userRepo, idOfUser);
 		if (!RestHelperMethods.isNull(userObject)) {
 			userObject.setCvPDFFile(null);
 			userRepo.save(userObject);

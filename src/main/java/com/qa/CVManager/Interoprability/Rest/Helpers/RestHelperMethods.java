@@ -12,8 +12,16 @@ import com.qa.CVManager.Persistence.Respository.UserRepository;
 
 public class RestHelperMethods {
 
-	static public User getUserIfExists(UserRepository userRepo, String idOfUser) {
+	static public User getUserIfExistsByUserID(UserRepository userRepo, String idOfUser) {
 		Optional<User> optUser = userRepo.findById(idOfUser);
+		if (optUser.isPresent()) {
+			return optUser.get();
+		}
+		return null;
+	}	
+	
+	static public User getUserIfExistsByUserName(UserRepository userRepo, String userNameOfUser) {
+		Optional<User> optUser = userRepo.findByUserName(userNameOfUser);
 		if (optUser.isPresent()) {
 			return optUser.get();
 		}

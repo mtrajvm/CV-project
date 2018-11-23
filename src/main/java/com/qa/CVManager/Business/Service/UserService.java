@@ -28,11 +28,11 @@ public class UserService {
 	}
 
 	public User showUser(String idOfUser) {
-		return RestHelperMethods.getUserIfExists(userRepo, idOfUser);
+		return RestHelperMethods.getUserIfExistsByUserID(userRepo, idOfUser);
 	}
 
 	public User updateUser(String idOfUser, User userObjectWithNewDetails) {
-		User userObjectWithOldDetails = RestHelperMethods.getUserIfExists(userRepo, idOfUser);
+		User userObjectWithOldDetails = RestHelperMethods.getUserIfExistsByUserID(userRepo, idOfUser);
 		if (!RestHelperMethods.isNull(userObjectWithOldDetails)) {
 			RestHelperMethods.updateUsername(userObjectWithNewDetails, userObjectWithOldDetails);
 			RestHelperMethods.updatePassword(userObjectWithNewDetails, userObjectWithOldDetails);
@@ -45,7 +45,7 @@ public class UserService {
 	}
 
 	public String deleteUser(String idOfUser) {
-		User userObject = RestHelperMethods.getUserIfExists(userRepo, idOfUser);
+		User userObject = RestHelperMethods.getUserIfExistsByUserID(userRepo, idOfUser);
 		if (!RestHelperMethods.isNull(userObject)) {
 			userRepo.delete(userObject);
 		} else {
