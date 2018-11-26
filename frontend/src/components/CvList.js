@@ -33,9 +33,16 @@ class CvList extends Component {
     }
 
   componentDidMount() {
-    axios.get('/api/cvdownload/' + this.props.details.id)
+    axios.get('/api/cvdownload/' + this.props.details.id,{
+    })
       .then(res => {
-        this.setState({ cvs: res.data });
+      const file = new Blob(
+      [res.data], 
+      {type: 'application/pdf'});
+      const fileURL = URL.createObjectURL(file);
+      console.log(file)
+      window.open(fileURL)
+        this.setState({ cvs: fileURL});
       });
      
   }
@@ -78,7 +85,7 @@ nextPath = (path) => {
   render() {     
     let pdfData = null;
     if(this.state.cvs!=null){
-      let pdfData = this.state.cvs.data;
+      let pdfData = this.state.cvs;
       console.log(pdfData)
     }
     return (

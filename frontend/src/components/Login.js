@@ -9,6 +9,8 @@ import { Link } from 'react-router-dom';
 import AppNavbar from './AppNavbar';
 import base64 from 'base-64';
 import axios from 'axios';
+import Footer from './Footer';
+
 class Login extends Component {
 
   constructor(props) {

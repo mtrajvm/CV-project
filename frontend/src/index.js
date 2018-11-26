@@ -2,19 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
+import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import UserList from './components/UserList';
 import Show from './components/Show';
 import Create from './components/Create';
 import Edit from './components/Edit';
 import Home from './components/Home';
-import AppNavbar from './components/AppNavbar';
 import Login from './components/Login';
 import Register from './components/Register';
 import List from './components/List';
+import AppNavbar from './components/AppNavbar';
+import Footer from './components/Footer';
 
 ReactDOM.render(
+<div>
       <Router>
         <Switch>
             <Route path='/' exact={true} component={Login} />
@@ -26,6 +28,11 @@ ReactDOM.render(
             <Route path='/edit/:id' exact={true} component={Edit} />
             <Route path='/List' exact={true} component={List} />
          </Switch>
-      </Router>,  
+      </Router> 
+
+   <footer>
+     <Footer/>
+  </footer>
+</div>,  
   document.getElementById('root')
 );

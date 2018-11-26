@@ -44,12 +44,12 @@ public class UserCVFileRestController {
 	}
 
 	@GetMapping("/cvdownload/{idOfUser}")
-	public Binary retrieveFile(@PathVariable String idOfUser) {
+	public byte[] retrieveFile(@PathVariable String idOfUser) {
 		User userObject = RestHelperMethods.getUserIfExistsByUserID(userRepo, idOfUser);
 		if (!RestHelperMethods.isNull(userObject)) {
 			Binary cvFile = userObject.getCvPDFFile();
 			if (!RestHelperMethods.isNull(cvFile)) {
-				return cvFile;
+				return cvFile.getData();
 				//RestHelperMethods.writeFileToProjectFolder(cvFile, "test.pdf");
 			} else {
 				return null;

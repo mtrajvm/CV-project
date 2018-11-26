@@ -5,6 +5,8 @@ import axios from 'axios';
 import Edit from './Edit';
 import UserList from './UserList';
 import CvList from './CvList';
+import TraineeList from './TraineeList';
+import AppNavbar from './AppNavbar';
 import {
   Container, Col, Form,
   FormGroup, Label, Input,
@@ -32,18 +34,23 @@ nextPath = (path) => {
 }
     render() {   
     
+      console.log(this.props.location.details)
         let list;    
         if (this.props.location.details.accountType == "admin") {
-            list = <UserList />;
-        } else if (this.props.location.details.accountType == "trainee") {
+            list = <UserList details={this.props.location.details}/>;
+        } 
+        else if (this.props.location.details.accountType == "trainee") {
             list = <CvList details={this.props.location.details} />;
+        }
+        else if(this.props.location.details.accountType == "traineemanager") {
+          list = <TraineeList details={this.props.location.details} />
         }
 
     return (
-        <div>
-            
-            {list}     
-      </div>
+          <div>
+            <AppNavbar details={this.props.location.details}/>
+            {list} 
+            </div>  
     );
   }
 }

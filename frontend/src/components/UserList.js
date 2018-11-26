@@ -9,6 +9,8 @@ import {
   Button, FormFeedback,
 } from 'reactstrap';
 import InformationComponent from './InformationComponent';
+import AppNavbar from './AppNavbar';
+
 class UserList extends Component {
 
   constructor(props) {
@@ -20,7 +22,7 @@ class UserList extends Component {
   }
 
   componentDidMount() {
-    axios.get('/api/users')
+    axios.get('/api/admin/users')
       .then(res => {
 
           this.setState({ users: res.data });
@@ -30,7 +32,7 @@ class UserList extends Component {
   }
     
 remove = (id) =>{
-  fetch('/api/user/'+id,{
+  fetch('/api/admin/user/'+id,{
     method : 'delete',
          headers: {
         'Content-Type' : 'application/json',
@@ -57,6 +59,7 @@ nextPath = (path) => {
       <div class="container">
         <div class="one">      
                 <InformationComponent  userName={this.state.hoveredUser} />
+                
         </div>
           <div class="two">
             <h4><Link to="/create"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add User</Link></h4>
