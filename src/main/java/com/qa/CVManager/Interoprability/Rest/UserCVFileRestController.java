@@ -44,24 +44,19 @@ public class UserCVFileRestController {
 	}
 
 	@GetMapping("/cvdownload/{idOfUser}")
-	public Binary retrieveFile(@PathVariable String idOfUser) {
+	public byte[] retrieveFile(@PathVariable String idOfUser) {
 		User userObject = RestHelperMethods.getUserIfExistsByUserID(userRepo, idOfUser);
 		if (!RestHelperMethods.isNull(userObject)) {
 			Binary cvFile = userObject.getCvPDFFile();
 			if (!RestHelperMethods.isNull(cvFile)) {
-				return cvFile;
-				//RestHelperMethods.writeFileToProjectFolder(cvFile, "test.pdf");
+				return cvFile.getData();
 			} else {
-				return null;
-				//return "CV Doesn't Exist For Download";
+				return null;				
 			}
 
 		} else {
 			return null;
-			//return "No User Found With ID: " + idOfUser;
 		}
-
-		//return "CV Downaloaded Successfully";
 	}
 
 	@GetMapping("/cvdelete/{idOfUser}")

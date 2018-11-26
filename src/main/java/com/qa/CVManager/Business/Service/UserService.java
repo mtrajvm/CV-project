@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.qa.CVManager.Constants.Constants;
 import com.qa.CVManager.Interoprability.Rest.Helpers.RestHelperMethods;
 import com.qa.CVManager.Persistence.Domain.User;
 import com.qa.CVManager.Persistence.Respository.UserRepository;
@@ -22,7 +23,7 @@ public class UserService {
 	}
 	
 	public Iterable<User> getUserByAccountTypeTrainee(){
-		return userRepo.findByAccountType("trainee");
+		return userRepo.findByAccountType(Constants.ACCOUNT_TYPE_TRAINEE);
 	}
 
 	public User saveUser(User user) {
