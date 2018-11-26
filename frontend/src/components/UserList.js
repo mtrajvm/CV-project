@@ -14,14 +14,18 @@ class UserList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      users: [],
+        users: [],
+        searchString: '',
     };
   }
 
   componentDidMount() {
     axios.get('/api/users')
       .then(res => {
-        this.setState({ users: res.data });
+
+          this.setState({ users: res.data });
+          // just for checking
+          console.log(this.state.users);
       });
   }
     
@@ -40,10 +44,14 @@ remove = (id) =>{
 
 nextPath = (path) => {
   this.props.history.push(path);
-}
+    }
 
+    filterList = (event) => {
+        this.setState({ searchString: event.target.value })
+    }
 
   render() {     
+      let filteredNames = this.state.users.filter(user => user.userName.toLowerCase().search(this.state.searchString.toLowerCase()) !== -1)
 
     return (
       <div class="container">
@@ -52,20 +60,26 @@ nextPath = (path) => {
         </div>
           <div class="two">
             <h4><Link to="/create"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add User</Link></h4>
-            <table class="table table-stripe">
+                <input type="text" value={this.state.searchString} onChange={this.filterList.bind(this)} placeholder="Search..." />
+
+                <table class="table table-stripe">
               <thead>
                 <tr>
-                  <th>UserName</th>
-                  <th>Password</th>
-                  <th>AccountType</th>
+                    <th>UserName</th>
+                    <th>Password</th>
+                    <th>AccountType</th>
+                    <th>First Name</th>
+                    <th>Second Name</th>
                 </tr>
               </thead>
               <tbody >
-                {this.state.users.map(user =>
+                        {filteredNames.map(user =>
                   <tr onMouseEnter={() => this.setState({hoveredUser :  user.userName})}>
                     <td><Link to={`/Show/${user.id}`}>{user.userName}</Link></td>
                     <td>{user.password}</td>
-                    <td>{user.accountType}</td>
+                        <td>{user.accountType}</td>
+                        <td>{user.firstName}</td>
+                        <td>{user.secondName}</td>
                     <td><button onClick={()=> this.remove(user.id)}>delete</button></td>
                     <td><button onClick={()=> this.nextPath('/edit/'+ user.id)}>update</button></td>
                   </tr>

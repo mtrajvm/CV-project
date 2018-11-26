@@ -8,20 +8,22 @@ import {
 import { Link } from 'react-router-dom';
 import AppNavbar from './AppNavbar';
 
-class Login extends Component {
+class Register extends Component {
 
   constructor(props) {
     super(props);
       this.state = {
-      'email': '',
-      'password': '',
-      'passwordConfirm': '',
-      validate: {
-        passwordState: '',
-        passwordConfirmState: '',
-        emailState: '',
-        registration: '',
-      },
+          'email': '',
+          'password': '',
+          'passwordConfirm': '',
+          'name': '',
+          'secondName': '',
+          validate: {
+            passwordState: '',
+            passwordConfirmState: '',
+            emailState: '',
+            registration: '',
+          },
     }
     this.handleChange = this.handleChange.bind(this);
   }
@@ -73,7 +75,9 @@ class Login extends Component {
     e.preventDefault();
     const details = Object.create(null, {
             userName: {value:this.state.email, enumerable: true},
-            password: {value:this.state.password, enumerable: true},
+            password: { value: this.state.password, enumerable: true },
+            name: {value:this.state.name},
+            secondName : { value: this.state.secondName},
         })
     console.log(JSON.stringify(details));
     //return
@@ -83,12 +87,15 @@ class Login extends Component {
         'Content-Type' : 'application/json',
         'Accept' : 'application/json'
       },
-      body: JSON.stringify(details)
-    });
+        body: JSON.stringify(details)
+    }).then(res => console.log(res.data))
+        .then(this.props.history.push("/"));
 
     return true;
   }
 
+
+  // this is unused atm
   submitForm = (e) => {
     if(this.onSubmit(e))
       {
@@ -102,16 +109,49 @@ class Login extends Component {
   }
 
   render() {
-    const { email, password, passwordConfirm } = this.state;
+      const { email, password, passwordConfirm, name, secondName } = this.state;
     return (
         <Container> 
             <h3 class="panel-title">
               REGISTRATION PAGE
             </h3>
 
-        
-        <Form className="form" onSubmit={(event) => this.submitFrom(event)}>
-            
+
+            <Form className="form" onSubmit={(event) => this.onSubmit(event)}>
+
+                <FormGroup row>
+                    <Label for="email" sm={2} md={{ size: 6, offset: 3 }}>Email</Label>
+                    <Col sm={12} md={{ size: 6, offset: 3 }}>
+                        <Input
+                            type="text"
+                            name="name"
+                            id="name"
+                            placeholder="first name"
+                            value={name}
+                            onChange={(event) => {
+                                this.handleChange(event)
+                            }}
+                        />
+                    </Col>
+                </FormGroup>
+
+
+                <FormGroup row>
+                    <Label for="email" sm={2} md={{ size: 6, offset: 3 }}>Email</Label>
+                    <Col sm={12} md={{ size: 6, offset: 3 }}>
+                        <Input
+                            type="text"
+                            name="secondName"
+                            id="secondName"
+                            placeholder="Second name"
+                            value={secondName}
+                            onChange={(event) => {
+                                this.handleChange(event)
+                            }}
+                        />
+                    </Col>
+                </FormGroup>
+
             <FormGroup row>
                 <Label for="email" sm={2} md={{ size: 6, offset: 3 }}>Email</Label>
                 <Col sm={12} md={{ size: 6, offset: 3 }}>
@@ -191,4 +231,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default Register;

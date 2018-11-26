@@ -14,15 +14,13 @@ import InformationComponent from './InformationComponent';
 class List extends Component {
 
   constructor(props) {
-    super(props);
+      super(props);
     this.state = {
       users: [],
-      hoveredUser : '',
-      accountType : 2,
-      firstName : this.props.firstName ? this.props.firstName : '',
-      secondName : this.props.secondName ? this.props.secondName : '',
-      email : this.props.email ? this.props.email : '',
-    };
+      };
+    // this is the user details for logged person
+    console.log(this.props.location.details)
+   
   }
 
 
@@ -30,20 +28,20 @@ class List extends Component {
 nextPath = (path) => {
   this.props.history.push(path);
 }
+    render() {   
 
-  render() {     
+  
         let list;    
-        if (this.state.accountType == 1) {
-            list  = <UserList /> ;
-              console.log("adming");
-          } else{
-              list = <CvList />
-              console.log("wrong");
-          }
+        if (this.props.location.details.accountType == "admin") {
+            list = <UserList />;
+        } else if (this.props.location.details.accountType == "trainee") {
+            list = <CvList details={this.props.location.details} />;
+        }
 
     return (
-      <div>
-        {list}      
+        <div>
+            {this.props.location.email}
+            {list}     
       </div>
     );
   }

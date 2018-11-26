@@ -1,0 +1,15 @@
+{
+    "folders": [
+        {
+            "path": "C:\\Users\\Meek\\eclipse-workspace\\first-boot"
+        },
+        {
+            "path": "C:\\Users\\Meek\\eclipse-workspace\\StringConvertion"
+        }
+    ],
+    "settings": {
+        "javascript.referencesCodeLens.enabled": true,
+        "typescript.implementationsCodeLens.enabled": true,
+        "typescript.referencesCodeLens.enabled": true
+    }
+}

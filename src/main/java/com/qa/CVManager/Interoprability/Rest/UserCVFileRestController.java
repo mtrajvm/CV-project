@@ -26,7 +26,6 @@ public class UserCVFileRestController {
 
 	@PostMapping("/cvupload/{idOfUser}")
 	public String singleFileUpload(@RequestParam("file") MultipartFile multipart, @PathVariable String idOfUser) {
-
 		User userObject = RestHelperMethods.getUserIfExistsByUserID(userRepo, idOfUser);
 		if (!RestHelperMethods.isNull(userObject)) {
 			try {
@@ -39,7 +38,7 @@ public class UserCVFileRestController {
 		} else {
 			return "No User Found With ID: " + idOfUser;
 		}
-
+		
 		return "Success, added MultipartFile: " + multipart.getOriginalFilename() + ", to User with ID : " + idOfUser;
 	}
 

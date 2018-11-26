@@ -9,14 +9,14 @@ import {
   Button, FormFeedback,
 } from 'reactstrap';
 import InformationComponent from './InformationComponent';
-import withSelectFiles from 'react-select-files'
+import { Document } from 'react-pdf'
 class CvList extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
       cvs: [],
-      file:null
+      file:null,
     };
     this.onFormSubmit = this.onFormSubmit.bind(this)
     this.onChange = this.onChange.bind(this)
@@ -32,10 +32,9 @@ class CvList extends Component {
     }
 
   componentDidMount() {
-    axios.get('/api/cvdownload/' + this.props.userid)
+    axios.get('/api/cvdownload/' + this.props.details.userId)
       .then(res => {
         this.setState({ cvs: res.data });
-        console.log(this.state.cvs);
       });
   }
 
@@ -57,16 +56,15 @@ remove = (id) =>{
 }
 
 
-  fileUpload(file){
-    const url = 'http://example.com/file-upload';
+    fileUpload() {
+      console.log(this.props.details)
     const formData = new FormData();
-    formData.append('file',file)
-    formData.append('userid',this.props.userid);
-    const config = {
-        headers: {
-            'content-type': 'multipart/form-data'
-        }
-    }
+    formData.append('file',this.state.file)
+      fetch('/api/cvupload/' + this.props.details.id, {
+          method : 'POST',
+          body: formData
+      }).then(response => console.log(response)).then(data => console.log(data))
+       
    
   }
 
@@ -80,7 +78,12 @@ nextPath = (path) => {
     return (
       <div class="container">
         <div class="one">      
-                <InformationComponent  userName={this.state.hoveredCV} />
+                <InformationComponent userName={this.state.hoveredCV} />
+                <Document
+                    file={{
+                        data: this.props.details.cvPDFFile.data
+                    }}
+                />
         </div>
           <div class="two">
             <h4>      
@@ -91,8 +94,8 @@ nextPath = (path) => {
               }}
                 onClick={(event)=> { 
                 event.target.value = null
-              }} /> 
-
+                        }} />
+                    <button onClick={this.fileUpload}>Upload</button>
             </h4>
             <table class="table table-stripe">
               <thead>
@@ -102,13 +105,13 @@ nextPath = (path) => {
                 </tr>
               </thead>
               <tbody >
-                {this.state.cvs.map(cv =>
-                  <tr onMouseEnter={() => this.setState({hoveredCV :  cv.fileName})}>
-                    <td>{cv.flag}</td>
-                    <td><button onClick={()=> this.remove(cv.id)}>delete</button></td>
+
+                        <tr onMouseEnter={() => this.setState({ hoveredCV: this.state.cvs.fileName})}>
+                                <td>{this.state.cvs.flag}</td>
+                                <td><button onClick={() => this.remove(this.state.cvs.id)}>delete</button></td>
                       {/* <td><button onClick={()=> this.nextPath('/editCv/'+ cv.id)}>update</button></td>  */}
                   </tr>
-                )}
+
               </tbody>
             </table>
           </div>

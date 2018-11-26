@@ -31,6 +31,11 @@ public class UserService {
 		return RestHelperMethods.getUserIfExistsByUserID(userRepo, idOfUser);
 	}
 
+	// added by Michal
+	public User showName(String name) {
+		return RestHelperMethods.getUserIfExistsByUserName(userRepo, name);
+	}
+	
 	public User updateUser(String idOfUser, User userObjectWithNewDetails) {
 		User userObjectWithOldDetails = RestHelperMethods.getUserIfExistsByUserID(userRepo, idOfUser);
 		if (!RestHelperMethods.isNull(userObjectWithOldDetails)) {

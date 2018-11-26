@@ -8,7 +8,7 @@ import {
 import { Link } from 'react-router-dom';
 import AppNavbar from './AppNavbar';
 import base64 from 'base-64';
-
+import axios from 'axios';
 class Login extends Component {
 
   constructor(props) {
@@ -70,17 +70,20 @@ class Login extends Component {
                         'Authorization': 'Basic ' +base64.encode(this.state.email + ":" + this.state.password)
                      },
             body: JSON.stringify(details),
-        }).then(console.log(JSON.stringify(details)))
-        .then(response => this.handleResponse(response))
+        }).then(response => this.handleResponse(response))
+        // added by Michal
         .then(user => {
             if (user) {
-                this.props.history.push('/home');
+                axios.get('api/userName/' + details.userName, {
+                }).then(response =>  (this.props.history.push({
+                   pathname : '/List',               
+                   details: response.data              
+                })));
             }
         });
     }
 
     handleResponse(response) {
-        
     return response.text().then(text => {
         const data = text && JSON.parse(text);
         if (!response.ok) {
@@ -99,11 +102,8 @@ class Login extends Component {
 
     submitForm = (e) =>{
         e.preventDefault();
-        console.log("anything")
-        console.log(`Email: ${ this.state.email }`)
         if(this.state.validate.emailState === 'has-success' && this.state.validate.passwordState === 'has-success')
             {
-                console.log("Inside the if")
                 this.handleLoginSubmit(e)
             }
         

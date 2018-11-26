@@ -13,6 +13,24 @@ public class User {
 	private String userName;
 	private String password;
 	private String accountType;
+	private String name;
+	private String secondName;
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSecondName() {
+		return secondName;
+	}
+
+	public void setSecondName(String secondName) {
+		this.secondName = secondName;
+	}
+
 	private Binary cvPDFFile;
 
 	public User() {
@@ -27,11 +45,13 @@ public class User {
 		this.cvPDFFile = cvPDFFile;
 	}
 
-	public User(String userName, String password, String accountType) {
+	public User(String userName, String password, String accountType, String name, String secondName) {
 		super();
 		this.userName = userName;
 		this.password = password;
 		this.accountType = accountType;
+		this.name = name;
+		this.secondName = secondName;
 	}
 
 	public String getId() {
