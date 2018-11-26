@@ -15,12 +15,13 @@ import com.qa.CVManager.Business.Service.UserService;
 import com.qa.CVManager.Persistence.Domain.User;
 
 @RestController
-@RequestMapping("/api")
-public class UserRestControlller {
+@RequestMapping("/api/admin")
+public class AdminRestControlller {
 
 	@Autowired
 	UserService userService;
-
+	
+	
 	@GetMapping("/users")
 	public Iterable<User> user() {
 		return userService.getUser();
@@ -31,19 +32,19 @@ public class UserRestControlller {
 		return userService.saveUser(user);
 	}
 
-	@GetMapping("/user/{idOfUser}")
-	public User show(@PathVariable String idOfUser) {
-		return userService.showUser(idOfUser);
+	@GetMapping("/user/{userNameOfUser}")
+	public User show(@PathVariable String userNameOfUser) {
+		return userService.getUserByUserName(userNameOfUser);
 	}
 
-	@PutMapping("/user/{idOfUser}")
-	public User update(@PathVariable String idOfUser, @RequestBody User userObjectWithNewDetails) {
-		return userService.updateUser(idOfUser, userObjectWithNewDetails);
+	@PutMapping("/user/{userNameOfUser}")
+	public User update(@PathVariable String userNameOfUser, @RequestBody User userObjectWithNewDetails) {
+		return userService.updateUser(userNameOfUser, userObjectWithNewDetails);
 	}
 
-	@DeleteMapping("/user/{idOfUser}")
-	public String delete(@PathVariable String idOfUser) {
-		return userService.deleteUser(idOfUser);
+	@DeleteMapping("/user/{userNameOfUser}")
+	public String delete(@PathVariable String userNameOfUser) {
+		return userService.deleteUser(userNameOfUser);
 	}
 
 }
