@@ -24,7 +24,7 @@ public class UserCVFileRestController {
 	@Autowired
 	UserRepository userRepo;
 
-	@PostMapping("/cvupload/{idOfUser}")
+	/*@PostMapping("/cvupload/{idOfUser}")
 	public String singleFileUpload(@RequestParam("file") MultipartFile multipart, @PathVariable String idOfUser) {
 
 		User userObject = RestHelperMethods.getUserIfExistsByUserID(userRepo, idOfUser);
@@ -41,9 +41,9 @@ public class UserCVFileRestController {
 		}
 
 		return "Success, added MultipartFile: " + multipart.getOriginalFilename() + ", to User with ID : " + idOfUser;
-	}
+	}*/
 
-	@GetMapping("/cvdownload/{idOfUser}")
+	/*@GetMapping("/cvdownload/{idOfUser}")
 	public byte[] retrieveFile(@PathVariable String idOfUser) {
 		User userObject = RestHelperMethods.getUserIfExistsByUserID(userRepo, idOfUser);
 		if (!RestHelperMethods.isNull(userObject)) {
@@ -57,9 +57,9 @@ public class UserCVFileRestController {
 		} else {
 			return null;
 		}
-	}
+	}*/
 
-	@GetMapping("/cvdelete/{idOfUser}")
+	/*@GetMapping("/cvdelete/{idOfUser}")
 	public String singleFileDelete(@PathVariable String idOfUser) {
 		User userObject = RestHelperMethods.getUserIfExistsByUserID(userRepo, idOfUser);
 		if (!RestHelperMethods.isNull(userObject)) {
@@ -70,5 +70,5 @@ public class UserCVFileRestController {
 		}
 
 		return "Success, deleted cv file blonging to User with ID : " + idOfUser;
-	}
+	}*/
 }

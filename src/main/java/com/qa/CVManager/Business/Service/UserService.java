@@ -1,11 +1,17 @@
 package com.qa.CVManager.Business.Service;
 
+import java.io.IOException;
+
+import org.bson.BsonBinarySubType;
+import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.qa.CVManager.Constants.Constants;
 import com.qa.CVManager.Interoprability.Rest.Helpers.RestHelperMethods;
+import com.qa.CVManager.Persistence.Domain.CVFile;
 import com.qa.CVManager.Persistence.Domain.User;
 import com.qa.CVManager.Persistence.Respository.UserRepository;
 
@@ -63,4 +69,41 @@ public class UserService {
 		}
 		return "Successfully deleted User with UserName: " + userNameOfUser;
 	}
+	
+	public String uploadCVFileToUser(MultipartFile multipart, String idOfUser, String CVFileNum) {
+		User userObject = RestHelperMethods.getUserIfExistsByUserID(userRepo, idOfUser);
+		if (!RestHelperMethods.isNull(userObject)) {			
+			RestHelperMethods.uploadCVDependingOnFileNum(userObject, multipart, CVFileNum);						
+			userRepo.save(userObject);
+		} else {
+			return "No User Found With ID: " + idOfUser;
+		}
+
+		return "Success, added MultipartFile: " + multipart.getOriginalFilename() + ", to User with ID : " + idOfUser;
+	}
+	
+	
+	public String deleteCVFileOfUser(String idOfUser, String CVFileNum) {
+		User userObject = RestHelperMethods.getUserIfExistsByUserID(userRepo, idOfUser);
+		if (!RestHelperMethods.isNull(userObject)) {
+			RestHelperMethods.deleteCVDependingOnFileNum(userObject, CVFileNum);
+			userRepo.save(userObject);
+		} else {
+			return "No User Found With ID: " + idOfUser;
+		}
+
+		return "Success, deleted cv file blonging to User with ID : " + idOfUser;
+	}
+	
+	public CVFile downloadCVFileFromUser(String idOfUser, String CVFileNum) {
+		User userObject = RestHelperMethods.getUserIfExistsByUserID(userRepo, idOfUser);
+		if (!RestHelperMethods.isNull(userObject)) {
+			return RestHelperMethods.downloadCVDependingOnFileNum(userObject, CVFileNum);
+		} else {
+			return null;
+		}
+		
+	}
+
+	
 }
