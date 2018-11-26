@@ -62,43 +62,27 @@ class Login extends Component {
             userName: {value:this.state.email, enumerable: true},
             password: {value:this.state.password, enumerable: true},
         })
-
-        fetch('/api/login' , {
-            method: 'POST',
+        fetch('/api/login/'+this.state.email , {
+            method : 'POST',
             headers: { 'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'Authorization': 'Basic ' +base64.encode(this.state.email + ":" + this.state.password)
+                      'Authorization': 'Basic ' +base64.encode(this.state.email + ":" + this.state.password)
                      },
             body: JSON.stringify(details),
-        }).then(response => this.handleResponse(response))
+        }).then(response => response.json())
+        .then(data => 
+            this.props.history.push({
+                pathname :'/List',
+                details :   data
+            
+        }));
+                            
+             
+        
         // added by Michal
-        .then(user => {
-            if (user) {
-                axios.get('api/userName/' + details.userName, {
-                }).then(response =>  (this.props.history.push({
-                   pathname : '/List',               
-                   details: response.data              
-                })));
-            }
-        });
+       
     }
 
-    handleResponse(response) {
-    return response.text().then(text => {
-        const data = text && JSON.parse(text);
-        if (!response.ok) {
-            if (response.status === 401) {
-                // auto logout if 401 response returned from api
-                this.logout();
-            }
-
-            const error = (data && data.message) || response.statusText;
-            return Promise.reject(error);
-        }
-
-        return data;
-    });
-    }
+   
 
     submitForm = (e) =>{
         e.preventDefault();

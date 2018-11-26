@@ -25,7 +25,7 @@ public class MongoUserDetailsService implements UserDetailsService {
 
 		// Conflict Of Class User from import springframework and from domain
 		com.qa.CVManager.Persistence.Domain.User userObject = RestHelperMethods.getUserIfExistsByUserName(userRepo, userName);
-		List<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority(Constants.USER_ROLE));
+		List<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority(userObject.getAccountType()));
 
 		return new User(userObject.getUserName(), userObject.getPassword(), authorities);
 	}

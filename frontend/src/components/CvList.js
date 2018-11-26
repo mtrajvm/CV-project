@@ -15,12 +15,13 @@ class CvList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cvs: [],
+      cvs: '',
       file:null,
     };
     this.onFormSubmit = this.onFormSubmit.bind(this)
     this.onChange = this.onChange.bind(this)
     this.fileUpload = this.fileUpload.bind(this)
+    console.log(this.props.details)
   }
 
 
@@ -32,10 +33,11 @@ class CvList extends Component {
     }
 
   componentDidMount() {
-    axios.get('/api/cvdownload/' + this.props.details.userId)
+    axios.get('/api/cvdownload/' + this.props.details.id)
       .then(res => {
         this.setState({ cvs: res.data });
       });
+     
   }
 
     onChange(e) {
@@ -43,11 +45,10 @@ class CvList extends Component {
   }
     
 remove = (id) =>{
-  fetch('/api/cvdelete/'+ this.props.userid +"/" + id,{
+  fetch('/api/cvdelete/'+ this.props.userid + "/" + id,{
     method : 'delete',
          headers: {
-        'Content-Type' : 'application/json',
-        'Accept' : 'application/json'
+       "Content-Type": "multipart/form-data"
       }
   }).then(()=>{
     let updateCVs = [...this.state.cvs].filter(i => i.id !== id);
@@ -56,12 +57,13 @@ remove = (id) =>{
 }
 
 
-    fileUpload() {
+    fileUpload= () => {
       console.log(this.props.details)
     const formData = new FormData();
     formData.append('file',this.state.file)
       fetch('/api/cvupload/' + this.props.details.id, {
           method : 'POST',
+
           body: formData
       }).then(response => console.log(response)).then(data => console.log(data))
        
@@ -74,14 +76,18 @@ nextPath = (path) => {
 
 
   render() {     
-
+    let pdfData = null;
+    if(this.state.cvs!=null){
+      let pdfData = this.state.cvs.data;
+      console.log(pdfData)
+    }
     return (
       <div class="container">
         <div class="one">      
                 <InformationComponent userName={this.state.hoveredCV} />
                 <Document
                     file={{
-                        data: this.props.details.cvPDFFile.data
+                        pdfData
                     }}
                 />
         </div>
@@ -106,7 +112,7 @@ nextPath = (path) => {
               </thead>
               <tbody >
 
-                        <tr onMouseEnter={() => this.setState({ hoveredCV: this.state.cvs.fileName})}>
+                        <tr>
                                 <td>{this.state.cvs.flag}</td>
                                 <td><button onClick={() => this.remove(this.state.cvs.id)}>delete</button></td>
                       {/* <td><button onClick={()=> this.nextPath('/editCv/'+ cv.id)}>update</button></td>  */}

@@ -17,20 +17,21 @@ class List extends Component {
       super(props);
     this.state = {
       users: [],
+     
       };
     // this is the user details for logged person
-    console.log(this.props.location.details)
-   
+  
+  
   }
 
 
 
 nextPath = (path) => {
   this.props.history.push(path);
+
 }
     render() {   
-
-  
+    
         let list;    
         if (this.props.location.details.accountType == "admin") {
             list = <UserList />;
@@ -40,7 +41,7 @@ nextPath = (path) => {
 
     return (
         <div>
-            {this.props.location.email}
+            
             {list}     
       </div>
     );
