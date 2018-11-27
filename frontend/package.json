@@ -4,11 +4,18 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "base-64": "^0.1.0",
     "create-react-app": "^2.1.1",
     "react": "^16.6.3",
+    "react-bootstrap": "^0.32.4",
     "react-dom": "^16.6.3",
+    "react-pdf": "^4.0.0",
+    "react-pdf-js": "^4.0.1",
+    "react-pdf-scroll": "^1.0.0",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "2.1.1"
+    "react-scripts": "2.1.1",
+    "react-worker-dom": "^2.0.0-alpha.6",
+    "reactstrap": "^6.5.0"
   },
   "scripts": {
     "start": "react-scripts start",

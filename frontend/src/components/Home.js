@@ -13,6 +13,7 @@ class Home extends Component {
           <div class="panel-heading">
             <h3 class="panel-title">
               HOME PAGE
+             
             </h3>
             <h4><Link to="/ShowAll"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Users List</Link></h4>
           </div>
