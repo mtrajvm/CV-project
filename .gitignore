@@ -46,7 +46,3 @@ frontend/.env.production.local
 npm-debug.log*
 frontend/yarn-debug.log*
 frontend/yarn-error.log*
-
-# Vincent is an idiot
-frontend
-frontend/src

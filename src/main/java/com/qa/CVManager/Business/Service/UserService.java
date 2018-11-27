@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.qa.CVManager.Constants.Constants;
+import com.qa.CVManager.Constants.ReturnStrings;
 import com.qa.CVManager.HelperMethods.CVFileHelperMethods;
 import com.qa.CVManager.HelperMethods.UserHelperMethods;
 import com.qa.CVManager.Persistence.Domain.CVFile;
@@ -75,9 +76,9 @@ public class UserService {
 		if (!UserHelperMethods.isNull(userObject)) {
 			userRepo.delete(userObject);
 		} else {
-			return "UserName: " + userNameOfUser + " Doesn't Exist";
+			return ReturnStrings.NO_USER_FOUND_WITH_USERNAME + userNameOfUser;
 		}
-		return "Successfully deleted User with UserName: " + userNameOfUser;
+		return ReturnStrings.SUCCESS_DELETE_USER_WITH_USERNAME + userNameOfUser;
 	}
 	
 	public String uploadCVFileToUser(MultipartFile multipart, String idOfUser, String cvFileNum) {
@@ -86,10 +87,10 @@ public class UserService {
 			CVFileHelperMethods.uploadCVDependingOnFileNum(userObject, multipart, cvFileNum);						
 			userRepo.save(userObject);
 		} else {
-			return "No User Found With ID: " + idOfUser;
+			return ReturnStrings.NO_USER_FOUND_WITH_ID + idOfUser;
 		}
 
-		return "Success, added MultipartFile: " + multipart.getOriginalFilename() + ", to User with ID : " + idOfUser;
+		return ReturnStrings.SUCCESSFULLY_UPLOADED_CV;
 	}
 	
 	
@@ -99,10 +100,10 @@ public class UserService {
 			CVFileHelperMethods.deleteCVDependingOnFileNum(userObject, cvFileNum);
 			userRepo.save(userObject);
 		} else {
-			return "No User Found With ID: " + idOfUser;
+			return ReturnStrings.NO_USER_FOUND_WITH_ID + idOfUser;
 		}
 
-		return "Success, deleted cv file blonging to User with ID : " + idOfUser;
+		return ReturnStrings.SUCCESSFULLY_DELETED_CV;
 	}
 	
 	public CVFile downloadCVFileFromUser(String idOfUser, String cvFileNum) {
@@ -121,10 +122,10 @@ public class UserService {
 			CVFileHelperMethods.updateCVFileFlagDependingOnFileNum(cvFlagStatus, userObject, cvFileNum);
 			userRepo.save(userObject);
 		} else {
-			return "No User Found With ID: " + idOfUser;
+			return ReturnStrings.NO_USER_FOUND_WITH_ID + idOfUser;
 		}
 		
-		return "Success, updated cv file flag blonging to User with ID : " + idOfUser;
+		return ReturnStrings.SUCCESSFULLY_UPDATED_CVFILEFLAG + cvFlagStatus;
 	}
 
 	

@@ -1,7 +1,5 @@
 package com.qa.CVManager.HelperMethods;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
 
@@ -10,26 +8,11 @@ import org.bson.types.Binary;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.qa.CVManager.Constants.Constants;
+import com.qa.CVManager.Constants.ReturnStrings;
 import com.qa.CVManager.Persistence.Domain.CVFile;
 import com.qa.CVManager.Persistence.Domain.User;
 
 public class CVFileHelperMethods {
-	static public String writeFileToProjectFolder(Binary file, String fileName) {
-		FileOutputStream fileOutputStream = null;
-		try {
-			fileOutputStream = new FileOutputStream(fileName);
-			fileOutputStream.write(file.getData());
-			fileOutputStream.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			return "Failure to open file to write to";
-		} catch (IOException e) {
-			e.printStackTrace();
-			return "Failure to close file Output Stream";
-		}
-
-		return "CV Downaloaded Successfully";
-	}
 	
 	static public String uploadCVDependingOnFileNum(User userObject, MultipartFile multipart, String cvFileNum ) {
 		switch (cvFileNum) {
@@ -44,7 +27,7 @@ public class CVFileHelperMethods {
 			break;
 		}
 		
-		return "CV Number: " + cvFileNum + " Uploaded Successfully";
+		return ReturnStrings.SUCCESSFULLY_UPLOADED_CV;
 	}
 	
 	static public String deleteCVDependingOnFileNum(User userObject, String cvFileNum ) {
@@ -60,7 +43,7 @@ public class CVFileHelperMethods {
 			break;
 		}
 		
-		return "CV Number: " + cvFileNum + " Deleted Successfully";
+		return ReturnStrings.SUCCESSFULLY_DELETED_CV;
 	}
 	
 	static public CVFile downloadCVDependingOnFileNum(User userObject, String cvFileNum ) {
@@ -87,7 +70,7 @@ public class CVFileHelperMethods {
 			userObject.getCvFile3().setFileFlag(cvFlagStatus);
 			break;
 		}		
-		return "CV Number: " + cvFileNum + " updated Successfully to Flag: " + cvFlagStatus;
+		return ReturnStrings.SUCCESSFULLY_UPDATED_CVFILEFLAG;
 		
 	}	
 	

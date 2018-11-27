@@ -20,4 +20,7 @@ public class Constants {
 	public static final String CVFILE_FLAG_CHECKED_NEEDS_REFACTORING = "warning";
 	public static final String CVFILE_FLAG_CHECKED_PERFECT = "success";
 	
+	public static final String QA_EMAIL = "@qa.com";
+	public static final String QA_TRAINEE_EMAIL = "@academytrainee.com";
+	
 }
