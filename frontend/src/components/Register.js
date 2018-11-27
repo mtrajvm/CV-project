@@ -16,6 +16,8 @@ class Login extends Component {
       'email': '',
       'password': '',
       'passwordConfirm': '',
+      'firstName':'',
+      'surName' : '',
       validate: {
         passwordState: '',
         passwordConfirmState: '',
@@ -74,6 +76,8 @@ class Login extends Component {
     const details = Object.create(null, {
             userName: {value:this.state.email, enumerable: true},
             password: {value:this.state.password, enumerable: true},
+            firstName: {value:this.state.firstName},
+            surName: {value:this.state.surName}
         })
     console.log(JSON.stringify(details));
     //return
@@ -102,7 +106,7 @@ class Login extends Component {
   }
 
   render() {
-    const { email, password, passwordConfirm } = this.state;
+    const { firstName, surName, email, password, passwordConfirm } = this.state;
     return (
         <Container> 
             <h3 class="panel-title">
@@ -111,7 +115,38 @@ class Login extends Component {
 
         
         <Form className="form" onSubmit={(event) => this.submitFrom(event)}>
-            
+              <FormGroup row>
+                <Label for="firstName" sm={2} md={{ size: 6, offset: 3 }}>Email</Label>
+                <Col sm={12} md={{ size: 6, offset: 3 }}>
+                <Input 
+                    type="text"
+                    name="firstName"
+                    id="firstName"
+                    placeholder="first name"
+                    value = { firstName }
+                    onChange={ (event) => {
+                            this.validateEmail(event)
+                            this.handleChange(event) } }
+                />
+                </Col>
+            </FormGroup>
+
+              <FormGroup row>
+                <Label for="surName" sm={2} md={{ size: 6, offset: 3 }}>Email</Label>
+                <Col sm={12} md={{ size: 6, offset: 3 }}>
+                <Input 
+                    type="text"
+                    name="surName"
+                    id="surName"
+                    placeholder="second name"
+                    value = { surName }
+                    onChange={ (event) => {
+                            this.validateEmail(event)
+                            this.handleChange(event) } }
+                />
+                </Col>
+            </FormGroup>
+
             <FormGroup row>
                 <Label for="email" sm={2} md={{ size: 6, offset: 3 }}>Email</Label>
                 <Col sm={12} md={{ size: 6, offset: 3 }}>

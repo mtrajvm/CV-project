@@ -6,7 +6,7 @@ import Edit from './Edit';
 import {
     Container, Col, Form,
     FormGroup, Label, Input,
-    Button, FormFeedback,
+    Button, FormFeedback, Dropdown, DropdownToggle, DropdownMenu, DropdownItem
 } from 'reactstrap';
 import InformationComponent from './InformationComponent';
 class UserList extends Component {
@@ -24,6 +24,8 @@ class UserList extends Component {
             .then(res => {
 
                 this.setState({ users: res.data });
+                
+                this.state.users.forEach(users =>  {users.dropdownOpen = false; });
                 // just for checking
                 console.log(this.state.users);
             });
@@ -42,6 +44,22 @@ class UserList extends Component {
         });
     }
 
+    updatePrivilage = (user) => {
+        console.log(user)
+        const details = Object.create(null,{
+            userName:{value:user.userName},
+            accountType:{value:user.accountType},
+        })
+        console.log(details)
+        fetch('/api/admin/user/'+user.userName,{
+            method:'PUT',
+            headers:{
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(details)
+        }).then(res=>console.log(res))
+    }
+
     nextPath = (path) => {
         this.props.history.push(path);
     }
@@ -50,6 +68,20 @@ class UserList extends Component {
         this.setState({ searchString: event.target.value })
     }
 
+    toggle = (curUser) => {
+          var userList = this.state.users;
+          var userIndex = userList.findIndex(user => { return user.id == curUser.id})
+          this.state.users[userIndex].dropdownOpen = !this.state.users[userIndex].dropdownOpen
+          this.forceUpdate()
+      
+    }
+
+    changeAccountType=(curUser,accType) =>{
+         var userList = this.state.users;
+          var userIndex = userList.findIndex(user => { return user.id == curUser.id})
+          this.state.users[userIndex].accountType = accType;
+          this.forceUpdate()
+    }
     render() {
         let filteredNames = this.state.users.filter(user => user.userName.toLowerCase().search(this.state.searchString.toLowerCase()) !== -1)
 
@@ -76,12 +108,24 @@ class UserList extends Component {
                             {filteredNames.map(user =>
                                 <tr onMouseEnter={() => this.setState({ hoveredUser: user.userName })}>
                                     <td><Link to={`/Show/${user.id}`}>{user.userName}</Link></td>
-                                    <td>{user.password}</td>
                                     <td>{user.accountType}</td>
+                                    <td>  <Dropdown isOpen={user.dropdownOpen} toggle={()=>this.toggle(user)}>
+                                            <DropdownToggle caret>
+                                                 {user.accountType}
+                                            </DropdownToggle>
+                                            <DropdownMenu>
+                                            <DropdownItem header>Change privilage</DropdownItem>
+                                            <DropdownItem onClick={()=>this.changeAccountType(user,'trainee')}>trainee</DropdownItem>
+                                            <DropdownItem divider />
+                                            <DropdownItem onClick={()=>this.changeAccountType(user,'traineemanager')}>trainee manager</DropdownItem>
+                                            <DropdownItem divider />
+                                            <DropdownItem onClick={()=>this.changeAccountType(user,'sales')}>sales team</DropdownItem>
+                                            </DropdownMenu>
+                                        </Dropdown></td>
                                     <td>{user.firstName}</td>
-                                    <td>{user.secondName}</td>
+                                    <td>{user.surName}</td>
                                     <td><button onClick={() => this.remove(user.id)}>delete</button></td>
-                                    <td><button onClick={() => this.nextPath('/edit/' + user.id)}>update</button></td>
+                                    <td><button onClick={() => this.updatePrivilage(user)}>update</button></td>
                                 </tr>
                             )}
                         </tbody>
