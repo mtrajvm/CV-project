@@ -1,10 +1,9 @@
-package com.qa.CVManager.Interoprability.Rest.Helpers;
+package com.qa.CVManager.HelperMethods;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
-import java.util.Optional;
 
 import org.bson.BsonBinarySubType;
 import org.bson.types.Binary;
@@ -13,33 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.qa.CVManager.Constants.Constants;
 import com.qa.CVManager.Persistence.Domain.CVFile;
 import com.qa.CVManager.Persistence.Domain.User;
-import com.qa.CVManager.Persistence.Respository.UserRepository;
 
-public class RestHelperMethods {
-
-	static public User getUserIfExistsByUserID(UserRepository userRepo, String idOfUser) {
-		Optional<User> optUser = userRepo.findById(idOfUser);
-		if (optUser.isPresent()) {
-			return optUser.get();
-		}
-		return null;
-	}	
-	
-	static public User getUserIfExistsByUserName(UserRepository userRepo, String userNameOfUser) {
-		Optional<User> optUser = userRepo.findByUserName(userNameOfUser);
-		if (optUser.isPresent()) {
-			return optUser.get();
-		}
-		return null;
-	}
-
-	static public boolean isNull(Object object) {
-		if (object == null) {
-			return true;
-		}
-		return false;
-	}
-
+public class CVFileHelperMethods {
 	static public String writeFileToProjectFolder(Binary file, String fileName) {
 		FileOutputStream fileOutputStream = null;
 		try {
@@ -57,8 +31,8 @@ public class RestHelperMethods {
 		return "CV Downaloaded Successfully";
 	}
 	
-	static public String uploadCVDependingOnFileNum(User userObject, MultipartFile multipart, String CVFileNum ) {
-		switch (CVFileNum) {
+	static public String uploadCVDependingOnFileNum(User userObject, MultipartFile multipart, String cvFileNum ) {
+		switch (cvFileNum) {
 		case "1" :
 			userObject.setCvFile1(intialiseCVForUpload(multipart));
 			break;
@@ -70,11 +44,11 @@ public class RestHelperMethods {
 			break;
 		}
 		
-		return "CV Number: " + CVFileNum + " Uploaded Successfully";
+		return "CV Number: " + cvFileNum + " Uploaded Successfully";
 	}
 	
-	static public String deleteCVDependingOnFileNum(User userObject, String CVFileNum ) {
-		switch (CVFileNum) {
+	static public String deleteCVDependingOnFileNum(User userObject, String cvFileNum ) {
+		switch (cvFileNum) {
 		case "1" :
 			userObject.setCvFile1(null);
 			break;
@@ -86,11 +60,11 @@ public class RestHelperMethods {
 			break;
 		}
 		
-		return "CV Number: " + CVFileNum + " Deleted Successfully";
+		return "CV Number: " + cvFileNum + " Deleted Successfully";
 	}
 	
-	static public CVFile downloadCVDependingOnFileNum(User userObject, String CVFileNum ) {
-		switch (CVFileNum) {
+	static public CVFile downloadCVDependingOnFileNum(User userObject, String cvFileNum ) {
+		switch (cvFileNum) {
 		case "1" :
 			return userObject.getCvFile1();
 		case "2" :
@@ -101,6 +75,21 @@ public class RestHelperMethods {
 		return null;
 	}
 	
+	public static String updateCVFileFlagDependingOnFileNum(String cvFlagStatus, User userObject, String cvFileNum) {
+		switch (cvFileNum) {
+		case "1" :
+			userObject.getCvFile1().setFileFlag(cvFlagStatus);
+			break;
+		case "2" :
+			userObject.getCvFile2().setFileFlag(cvFlagStatus);
+			break;
+		case "3" :
+			userObject.getCvFile3().setFileFlag(cvFlagStatus);
+			break;
+		}		
+		return "CV Number: " + cvFileNum + " updated Successfully to Flag: " + cvFlagStatus;
+		
+	}	
 	
 	static private CVFile intialiseCVForUpload(MultipartFile multipart) {
 		String fullFileName = multipart.getOriginalFilename();
@@ -127,31 +116,6 @@ public class RestHelperMethods {
 			return null;
 		}
 	}
+
 	
-	 
-
-	static public String updateUsername(User userObjectWithNewDetails, User userObjectWithOldDetails) {
-		if (!isNull(userObjectWithNewDetails.getUserName())) {
-			userObjectWithOldDetails.setUserName(userObjectWithNewDetails.getUserName());
-			return "User's userName updated";
-		}
-		return "No Changes to userName to be made";
-	}
-
-	static public String updatePassword(User userObjectWithNewDetails, User userObjectWithOldDetails) {
-		if (!isNull(userObjectWithNewDetails.getPassword())) {
-			userObjectWithOldDetails.setPassword(userObjectWithNewDetails.getPassword());
-			return "User's password updated";
-		}
-		return "No Changes to password to be made";
-	}
-
-	static public String updateAccountType(User userObjectWithNewDetails, User userObjectWithOldDetails) {
-		if (!isNull(userObjectWithNewDetails.getAccountType())) {
-			userObjectWithOldDetails.setAccountType(userObjectWithNewDetails.getAccountType());
-			return "User's accountType updated";
-		}
-		return "No Changes to accountType to be made";
-	}
-
 }

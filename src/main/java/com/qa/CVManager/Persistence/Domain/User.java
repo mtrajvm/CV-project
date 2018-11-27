@@ -17,6 +17,8 @@ public class User {
 	private CVFile cvFile2;
 	private CVFile cvFile3;
 	
+	private String firstName;
+	private String surName;
 	
 	public CVFile getCvFile1() {
 		return cvFile1;
@@ -30,6 +32,26 @@ public class User {
 
 	public CVFile getCvFile2() {
 		return cvFile2;
+	}
+
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+
+	public String getSurName() {
+		return surName;
+	}
+
+
+	public void setSurName(String surName) {
+		this.surName = surName;
 	}
 
 
@@ -53,11 +75,13 @@ public class User {
 	}
 
 	
-	public User(String userName, String password, String accountType) {
+	public User(String userName, String password, String accountType, String firstName, String surName) {
 		super();
 		this.userName = userName;
 		this.password = password;
 		this.accountType = accountType;
+		this.firstName = firstName;
+		this.surName = surName;
 	}
 
 	public String getId() {

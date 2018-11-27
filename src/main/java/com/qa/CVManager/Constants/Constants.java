@@ -15,9 +15,9 @@ public class Constants {
 	public static final String REACT_LOGIN_PAGE_URL = "http://localhost:3000/";
 	public static final String REACT_FAILURE_LOGIN_PAGE_URL = "http://localhost:3000/?error=true";
 	
-	public static final String CVFILE_FLAG_DEFUALT_NOT_CHECKED = "black";
-	public static final String CVFILE_FLAG_CHECKED_NOT_ACCEPTABLE = "red";
-	public static final String CVFILE_FLAG_CHECKED_NEED_SREFACTORING = "amber";
-	public static final String CVFILE_FLAG_CHECKED_PERFECT = "green";
+	public static final String CVFILE_FLAG_DEFUALT_NOT_CHECKED = "secondary";
+	public static final String CVFILE_FLAG_CHECKED_NOT_ACCEPTABLE = "danger";
+	public static final String CVFILE_FLAG_CHECKED_NEEDS_REFACTORING = "warning";
+	public static final String CVFILE_FLAG_CHECKED_PERFECT = "success";
 	
 }
