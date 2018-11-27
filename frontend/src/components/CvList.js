@@ -18,7 +18,6 @@ class CvList extends Component {
             fileName: "file not added",
             fileFlag:"black"
         }
-        const cvcount = 0;
         this.state = {
             cv1: data,
             cv2: data,
@@ -34,70 +33,76 @@ class CvList extends Component {
     onFormSubmit(e) {
         e.preventDefault()
         this.fileUpload(this.state.file).then((response) => {
-            console.log(response.data);
         })
     }
 
     componentDidMount() {
-        axios.get('/api/trainee/cvdownload/1/' + this.props.details.id)
+        axios.get('/api/trainee/cvdownload/1/' + sessionStorage.getItem('id'))
             .then(res => {
-                const toShow = "data:application/pdf;base64," + res.data.fileBinaryData.data;
+
                 if (res.data.fileBinaryData != null) {
-                    this.cvcount ++;
+                    const toShow = "data:application/pdf;base64," + res.data.fileBinaryData.data;
                     this.setState({ cv1: res.data });
+                    this.setState({ file: toShow });
                 }
-                this.setState({ file: toShow });
+               
             });
 
 
-        axios.get('/api/trainee/cvdownload/2/' + this.props.details.id)
+        axios.get('/api/trainee/cvdownload/2/' + sessionStorage.getItem('id'))
             .then(res => {
 
                 if (res.data.fileBinaryData != null) {
-                    this.cvcount++;
+                    this.setState({ cv2: res.data });
                     this.setState({ cv2: res.data });
                 }
             });
 
 
-        axios.get('/api/trainee/cvdownload/3/' + this.props.details.id)
+        axios.get('/api/trainee/cvdownload/3/' + sessionStorage.getItem('id'))
             .then(res => {
 
                 if (res.data.fileBinaryData != null) {
-                    this.cvcount++;
+                    this.setState({ cv3: res.data });
                     this.setState({ cv3: res.data });
                 }
             });
 
     }
 
-    onChange(e) {
-        this.setState({ file: e.target.files[0] })
+    async onChange(e,id) {
+        await this.setState({ file: e.target.files[0] });
+        this.fileUpload(id);
     }
 
     remove = (id) => {
-
-        fetch('/api/trainee/cvdelete/' + this.props.details.id + "/" + id, {
-            method: 'delete',
-            headers: {
-                "Content-Type": "multipart/form-data"
-            }
-        }).then(this.cvcount--)
+        fetch('/api/trainee/cvdelete/' + id + "/" +sessionStorage.getItem('id'), {
+            method: 'DELETE',
+        }).then(res=> console.log(res.status))
     }
 
 
-    fileUpload = () => {
-        console.log(this.props.details)
+    fileUpload = (id) => {
         const formData = new FormData();
         formData.append('file', this.state.file)
-        fetch('/api/trainee/cvupload/' + (this.cvcount+1) + '/ ' + this.props.details.id, {
+        fetch('/api/trainee/cvupload/' + id + '/' + sessionStorage.getItem('id') ,  {
             method: 'POST',
-
             body: formData
-        }).then(response => console.log(response)).then(data => console.log(data))
+        })
 
 
     }
+
+    changePdf = (id) =>{
+        axios.get('/api/trainee/cvdownload/'+id+ '/' +sessionStorage.getItem('id'))
+            .then(res => {
+                if (res.data.fileBinaryData != null) {
+                    const toShow = "data:application/pdf;base64," + res.data.fileBinaryData.data;
+                    this.setState({ file: toShow });
+                }     
+            });
+    }
+
 
     nextPath = (path) => {
         this.props.history.push(path);
@@ -108,55 +113,45 @@ class CvList extends Component {
         let pdfData = null;
         if (this.state.cvs != null) {
             let pdfData = this.state.cvs.data;
-            console.log(pdfData)
         }
         return (
             <div class="container">
                 <div class="one">
-                    <InformationComponent userName={this.state.hoveredCV} />
                     <iframe src={this.state.file}/>
                 </div>
                 <div class="two">
                     <h4>
 
-                        <input id="upload" ref="upload" type="file"
-                            onChange={(event) => {
-                                this.onChange(event)
-                            }}
-                            onClick={(event) => {
-                                event.target.value = null
-                            }} />
-                        <button onClick={this.fileUpload}>Upload</button>
+                      
                     </h4>
                     <table class="table table-stripe">
                         <thead>
                             <tr>
                                 <th>File Name</th>
                                 <th>Flag</th>
-
                             </tr>
                         </thead>
                         <tbody >
 
-                            <tr>
+                            <tr onClick={()=>this.changePdf(1)}>
                                 <td>{this.state.cv1.fileName}</td>
-                                <td>{this.state.cv1.fileFlag}</td>
+                                 <td><Button color={this.state.cv1.fileFlag}  disabled>Flag</Button></td>
                                 <td><button onClick={() => { if (this.state.cv1.fileBinaryData != null) { this.remove(1) } }}>delete</button></td>
-                                {/* <td><button onClick={()=> this.nextPath('/editCv/'+ cv.id)}>update</button></td>  */}
+                                <td> <input id="upload" ref="upload" type="file" onChange={(event) => {this.onChange(event,1) }} onClick={(event) => {event.target.value = null}} /></td>
                             </tr>
 
-                            <tr>
+                            <tr onClick={()=>this.changePdf(2)}>
                                 <td>{this.state.cv2.fileName}</td>
-                                <td>{this.state.cv2.fileFlag}</td>
-                                <td><button onClick={() => { if (this.state.cv2.fileBinaryData != null) { this.remove(2) } }}>delete</button></td>
-                                {/* <td><button onClick={()=> this.nextPath('/editCv/'+ cv.id)}>update</button></td>  */}
+                                 <td><Button color={this.state.cv2.fileFlag}  disabled>Flag</Button></td>
+                                     <td><button onClick={() => { if (this.state.cv1.fileBinaryData != null) { this.remove(2) } }}>delete</button></td>
+                                <td> <input id="upload" ref="upload" type="file" onChange={(event) => {this.onChange(event,2) }} onClick={(event) => {event.target.value = null}} /></td>
                             </tr>
 
-                            <tr>
+                            <tr onClick={()=>this.changePdf(3)}>
                                 <td>{this.state.cv3.fileName}</td>
-                                <td>{this.state.cv3.fileFlag}</td>
-                                <td><button onClick={() => { if (this.state.cv3.fileBinaryData != null) { this.remove(3) } }}>delete</button></td>
-                                {/* <td><button onClick={()=> this.nextPath('/editCv/'+ cv.id)}>update</button></td>  */}
+                                 <td><Button color={this.state.cv3.fileFlag}  disabled>Flag</Button></td>
+                                <td><button onClick={() => { if (this.state.cv1.fileBinaryData != null) { this.remove(3) } }}>delete</button></td>
+                               <td> <input id="upload" ref="upload" type="file" onChange={(event) => {this.onChange(event,3) }} onClick={(event) => {event.target.value = null}} /></td>
                             </tr>
                         </tbody>
                     </table>

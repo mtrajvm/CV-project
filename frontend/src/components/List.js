@@ -5,6 +5,7 @@ import axios from 'axios';
 import Edit from './Edit';
 import UserList from './UserList';
 import CvList from './CvList';
+import Logout from './Logout';
 import {
     Container, Col, Form,
     FormGroup, Label, Input,
@@ -21,7 +22,7 @@ class List extends Component {
         };
         // this is the user details for logged person
 
-
+       
     }
 
 
@@ -33,15 +34,15 @@ class List extends Component {
     render() {
 
         let list;
-        if (this.props.location.details.accountType == "admin") {
+        if ( sessionStorage.getItem('accounType') == "admin") {
             list = <UserList />;
-        } else if (this.props.location.details.accountType == "trainee") {
+        } else if (sessionStorage.getItem('accounType') == "trainee") {
             list = <CvList details={this.props.location.details} />;
         }
 
         return (
             <div>
-
+            <Logout/>
                 {list}
             </div>
         );

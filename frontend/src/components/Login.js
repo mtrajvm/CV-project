@@ -6,7 +6,6 @@ import {
     Button, FormFeedback,
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import AppNavbar from './AppNavbar';
 import base64 from 'base-64';
 import axios from 'axios';
 class Login extends Component {
@@ -69,12 +68,17 @@ class Login extends Component {
             },
             body: JSON.stringify(details),
         }).then(response => response.json())
-            .then(data =>
+            .then(data =>{
+                if(data.accountType!=null){
+                        sessionStorage.setItem('accounType', data.accountType);
+                        sessionStorage.setItem('id', data.id);
+                        sessionStorage.setItem('userName', data.userName);
+                }
                 this.props.history.push({
                     pathname: '/List',
                     details: data
 
-                }));
+                })});
 
 
 

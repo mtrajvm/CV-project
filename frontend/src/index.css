@@ -6,9 +6,32 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
+  background-image: linear-gradient( rgb(169, 169, 169, 0.5), rgb(169, 169, 169, 0.15));
 
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.MyFooter {
+
+  border-radius: 0 !important;
+  border-bottom: 0;
+  margin: 50px 0 0;
+}
+
+.logout {
+  position: absolute;
+  right: 0;
+  
+}
+
+.panel-title {
+  border-bottom: 0;
+  margin: 25px 0 0;
+}
+
