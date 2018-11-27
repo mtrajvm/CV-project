@@ -1,16 +1,13 @@
-package com.qa.CVManager.Interoprability.Rest.Helpers;
+package com.qa.CVManager.HelperMethods;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Optional;
 
-import org.bson.types.Binary;
-
+import com.qa.CVManager.Constants.Constants;
+import com.qa.CVManager.Constants.ReturnStrings;
 import com.qa.CVManager.Persistence.Domain.User;
 import com.qa.CVManager.Persistence.Respository.UserRepository;
 
-public class RestHelperMethods {
+public class UserHelperMethods {
 
 	static public User getUserIfExistsByUserID(UserRepository userRepo, String idOfUser) {
 		Optional<User> optUser = userRepo.findById(idOfUser);
@@ -35,45 +32,52 @@ public class RestHelperMethods {
 		return false;
 	}
 
-	static public String writeFileToProjectFolder(Binary file, String fileName) {
-		FileOutputStream fileOutputStream = null;
-		try {
-			fileOutputStream = new FileOutputStream(fileName);
-			fileOutputStream.write(file.getData());
-			fileOutputStream.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			return "Failure to open file to write to";
-		} catch (IOException e) {
-			e.printStackTrace();
-			return "Failure to close file Output Stream";
-		}
-
-		return "CV Downaloaded Successfully";
-	}
-
 	static public String updateUsername(User userObjectWithNewDetails, User userObjectWithOldDetails) {
 		if (!isNull(userObjectWithNewDetails.getUserName())) {
 			userObjectWithOldDetails.setUserName(userObjectWithNewDetails.getUserName());
-			return "User's userName updated";
+			return ReturnStrings.USERNAME_UPDATED;
 		}
-		return "No Changes to userName to be made";
+		return ReturnStrings.NO_CHANGES_WERE_MADE;
 	}
 
 	static public String updatePassword(User userObjectWithNewDetails, User userObjectWithOldDetails) {
 		if (!isNull(userObjectWithNewDetails.getPassword())) {
 			userObjectWithOldDetails.setPassword(userObjectWithNewDetails.getPassword());
-			return "User's password updated";
+			return ReturnStrings.PASSWORD_UPDATED;
 		}
-		return "No Changes to password to be made";
+		return ReturnStrings.NO_CHANGES_WERE_MADE;
 	}
 
 	static public String updateAccountType(User userObjectWithNewDetails, User userObjectWithOldDetails) {
 		if (!isNull(userObjectWithNewDetails.getAccountType())) {
 			userObjectWithOldDetails.setAccountType(userObjectWithNewDetails.getAccountType());
-			return "User's accountType updated";
+			return ReturnStrings.ACCOUNTTYPE_UPDATED;
 		}
-		return "No Changes to accountType to be made";
+		return ReturnStrings.NO_CHANGES_WERE_MADE;
+	}
+	
+	static public boolean checkIfUserAlreadyExists(UserRepository userRepo , User user) {
+		if(isNull(userRepo.findByUserName(user.getUserName()))) {
+			return true;
+		}		
+		return false;
+	}
+	
+	static public boolean checkIfUserNameIsLegit(String userName) {
+		if(userName.toLowerCase().contains(Constants.QA_EMAIL) || userName.toLowerCase().contains(Constants.QA_TRAINEE_EMAIL)) {
+			return true;
+		}		
+		return false;
+	}
+	
+	static public String setAccountTypeAccordingToUserNameEmail(User user, String userName) {
+		if(userName.toLowerCase().contains(Constants.QA_EMAIL)) {
+			user.setAccountType(Constants.ACCOUNT_TYPE_SALES);
+		}
+		else if (userName.toLowerCase().contains(Constants.QA_TRAINEE_EMAIL)) {
+			user.setAccountType(Constants.ACCOUNT_TYPE_TRAINEE);
+		}		
+		return user.getAccountType();
 	}
 
 }

@@ -11,8 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
-
-import com.qa.CVManager.Interoprability.Rest.Helpers.RestHelperMethods;
+import com.qa.CVManager.HelperMethods.UserHelperMethods;
 import com.qa.CVManager.Persistence.Respository.UserRepository;
 
 @Component
@@ -25,7 +24,7 @@ public class MongoUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String userName) {
 
 		// Conflict Of Class User from import springframework and from domain
-		com.qa.CVManager.Persistence.Domain.User userObject = RestHelperMethods.getUserIfExistsByUserName(userRepo, userName);
+		com.qa.CVManager.Persistence.Domain.User userObject = UserHelperMethods.getUserIfExistsByUserName(userRepo, userName);
 		List<GrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority(userObject.getAccountType()));
 
 		return new User(userObject.getUserName(), userObject.getPassword(), authorities);
