@@ -20,7 +20,7 @@ class UserList extends Component {
     }
 
     componentDidMount() {
-        axios.get('/api/users')
+        axios.get('/api/admin/users')
             .then(res => {
 
                 this.setState({ users: res.data });
@@ -30,7 +30,7 @@ class UserList extends Component {
     }
 
     remove = (id) => {
-        fetch('/api/user/' + id, {
+        fetch('/api/admin/user/' + id, {
             method: 'delete',
             headers: {
                 'Content-Type': 'application/json',

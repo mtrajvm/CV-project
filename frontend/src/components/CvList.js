@@ -18,6 +18,7 @@ class CvList extends Component {
             fileName: "file not added",
             fileFlag:"black"
         }
+        const cvcount = 0;
         this.state = {
             cv1: data,
             cv2: data,
@@ -42,6 +43,7 @@ class CvList extends Component {
             .then(res => {
                 const toShow = "data:application/pdf;base64," + res.data.fileBinaryData.data;
                 if (res.data.fileBinaryData != null) {
+                    this.cvcount ++;
                     this.setState({ cv1: res.data });
                 }
                 this.setState({ file: toShow });
@@ -52,6 +54,7 @@ class CvList extends Component {
             .then(res => {
 
                 if (res.data.fileBinaryData != null) {
+                    this.cvcount++;
                     this.setState({ cv2: res.data });
                 }
             });
@@ -61,6 +64,7 @@ class CvList extends Component {
             .then(res => {
 
                 if (res.data.fileBinaryData != null) {
+                    this.cvcount++;
                     this.setState({ cv3: res.data });
                 }
             });
@@ -72,15 +76,13 @@ class CvList extends Component {
     }
 
     remove = (id) => {
-        fetch('/api/trainee/cvdelete/' + this.props.userid + "/" + id, {
+
+        fetch('/api/trainee/cvdelete/' + this.props.details.id + "/" + id, {
             method: 'delete',
             headers: {
                 "Content-Type": "multipart/form-data"
             }
-        }).then(() => {
-            let updateCVs = [...this.state.cvs].filter(i => i.id !== id);
-            this.setState({ cvs: updateCVs });
-        });
+        }).then(this.cvcount--)
     }
 
 
@@ -88,7 +90,7 @@ class CvList extends Component {
         console.log(this.props.details)
         const formData = new FormData();
         formData.append('file', this.state.file)
-        fetch('/api/trainee/cvupload/1/' + this.props.details.id, {
+        fetch('/api/trainee/cvupload/' + (this.cvcount+1) + '/ ' + this.props.details.id, {
             method: 'POST',
 
             body: formData
@@ -139,21 +141,21 @@ class CvList extends Component {
                             <tr>
                                 <td>{this.state.cv1.fileName}</td>
                                 <td>{this.state.cv1.fileFlag}</td>
-                                <td><button onClick={() => this.remove(this.state.cvs.id)}>delete</button></td>
+                                <td><button onClick={() => { if (this.state.cv1.fileBinaryData != null) { this.remove(1) } }}>delete</button></td>
                                 {/* <td><button onClick={()=> this.nextPath('/editCv/'+ cv.id)}>update</button></td>  */}
                             </tr>
 
                             <tr>
                                 <td>{this.state.cv2.fileName}</td>
                                 <td>{this.state.cv2.fileFlag}</td>
-                                <td><button onClick={() => this.remove(this.state.cvs.id)}>delete</button></td>
+                                <td><button onClick={() => { if (this.state.cv2.fileBinaryData != null) { this.remove(2) } }}>delete</button></td>
                                 {/* <td><button onClick={()=> this.nextPath('/editCv/'+ cv.id)}>update</button></td>  */}
                             </tr>
 
                             <tr>
                                 <td>{this.state.cv3.fileName}</td>
                                 <td>{this.state.cv3.fileFlag}</td>
-                                <td><button onClick={() => this.remove(this.state.cvs.id)}>delete</button></td>
+                                <td><button onClick={() => { if (this.state.cv3.fileBinaryData != null) { this.remove(3) } }}>delete</button></td>
                                 {/* <td><button onClick={()=> this.nextPath('/editCv/'+ cv.id)}>update</button></td>  */}
                             </tr>
                         </tbody>
