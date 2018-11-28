@@ -24,7 +24,7 @@ class App extends Component {
           <Route path='/Show/:id' exact={true} component={Show}/>
           <Route path='/ShowAll' exact={true} component={UserList}/>
           <Route path='/edit/:id' exact={true} component={Edit}/>
-          <Route path='/List' exact={true} component={List}/>
+          <Route path='/list' exact={true} component={List}/>
          </Switch>
       </Router>  
     );
