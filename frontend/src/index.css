@@ -17,12 +17,14 @@ code {
     monospace;
 }
 
-.MyFooter {
+iframe {
+    height: 600px;
+    width:400px;
 
-  border-radius: 0 !important;
-  border-bottom: 0;
-  margin: 50px 0 0;
+
 }
+
+
 
 .logout {
   position: absolute;

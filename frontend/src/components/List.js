@@ -5,7 +5,6 @@ import axios from 'axios';
 import Edit from './Edit';
 import UserList from './UserList';
 import CvList from './CvList';
-import Logout from './Logout';
 import {
     Container, Col, Form,
     FormGroup, Label, Input,
@@ -41,8 +40,7 @@ class List extends Component {
         }
 
         return (
-            <div>
-            <Logout/>
+            <div class="changingContainer">
                 {list}
             </div>
         );

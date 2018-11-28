@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
+import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import UserList from './components/UserList';
 import Show from './components/Show';
@@ -15,7 +16,7 @@ import List from './components/List';
 import Footer from './components/Footer';
 
 ReactDOM.render(
-<div>
+<div class="mainContainer">
       <Router>
         <Switch>
             <Route path='/' exact={true} component={Login} />
@@ -28,10 +29,10 @@ ReactDOM.render(
             <Route path='/List' exact={true} component={List} />
          </Switch>
       </Router> 
-
-   <footer>
+ 
+        <footer class="footer">
      <Footer/>
-  </footer>
+            </footer>
 </div>,  
   document.getElementById('root')
 );

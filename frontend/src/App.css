@@ -31,18 +31,52 @@
   }
 }
 
-.container {
-    width: 80%;
-    height: 200px;
-    margin: auto;
-    padding: 10px;
+
+
+.mainContainer {
+
+    width: 1400px;
+    height: 900px;
+   
+
 }
-.one {
-    width: 30%;
-    height: 200px;
+.listContainer {
+    margin-top : 50px;
+    width: 600px;
+    height: 600px;
     float: left;
 }
-.two {
-    margin-left: 30%;
-    height: 200px;
+
+.infoContainer {
+    margin-top: 50px;
+    padding-left: 10px;
+    width: 400px;
+    height: 600px;
+    float: left;
+}
+
+.rightContainer {
+    margin-top: 50px;
+    width: 400px;
+    height: 600px;
+    float: left;
+}
+
+.changingContainer {
+  width :1400px;
+  height : 600px;
+
+
+}
+.footer {
+   margin-left:400px;
+   margin-top:150px;
+    height: 100px;
+    width: 800px;
+    clear: both;
+}
+
+.hoverable:hover {
+    background-color:wheat;
+
 }

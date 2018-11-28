@@ -6,7 +6,7 @@ import Edit from './Edit';
 import {
     Container, Col, Form,
     FormGroup, Label, Input,
-    Button, FormFeedback,
+    Button, FormFeedback, Table
 } from 'reactstrap';
 import InformationComponent from './InformationComponent';
 import { Document } from 'react-pdf'
@@ -115,16 +115,16 @@ class CvList extends Component {
             let pdfData = this.state.cvs.data;
         }
         return (
-            <div class="container">
-                <div class="one">
-                    <iframe src={this.state.file}/>
-                </div>
-                <div class="two">
+            <div >
+                <div class="infoContainer">
+                    </div>
+
+                <div class="listContainer">
                     <h4>
 
                       
                     </h4>
-                    <table class="table table-stripe">
+                    <Table  >
                         <thead>
                             <tr>
                                 <th>File Name</th>
@@ -133,28 +133,31 @@ class CvList extends Component {
                         </thead>
                         <tbody >
 
-                            <tr onClick={()=>this.changePdf(1)}>
+                            <tr class="hoverable" onClick={() => this.changePdf(1)} >
                                 <td>{this.state.cv1.fileName}</td>
                                  <td><Button color={this.state.cv1.fileFlag}  disabled>Flag</Button></td>
                                 <td><button onClick={() => { if (this.state.cv1.fileBinaryData != null) { this.remove(1) } }}>delete</button></td>
                                 <td> <input id="upload" ref="upload" type="file" onChange={(event) => {this.onChange(event,1) }} onClick={(event) => {event.target.value = null}} /></td>
                             </tr>
 
-                            <tr onClick={()=>this.changePdf(2)}>
+                            <tr class="hoverable" onClick={()=>this.changePdf(2)}>
                                 <td>{this.state.cv2.fileName}</td>
                                  <td><Button color={this.state.cv2.fileFlag}  disabled>Flag</Button></td>
                                      <td><button onClick={() => { if (this.state.cv1.fileBinaryData != null) { this.remove(2) } }}>delete</button></td>
                                 <td> <input id="upload" ref="upload" type="file" onChange={(event) => {this.onChange(event,2) }} onClick={(event) => {event.target.value = null}} /></td>
                             </tr>
 
-                            <tr onClick={()=>this.changePdf(3)}>
+                            <tr class="hoverable" onClick={()=>this.changePdf(3)}>
                                 <td>{this.state.cv3.fileName}</td>
                                  <td><Button color={this.state.cv3.fileFlag}  disabled>Flag</Button></td>
                                 <td><button onClick={() => { if (this.state.cv1.fileBinaryData != null) { this.remove(3) } }}>delete</button></td>
                                <td> <input id="upload" ref="upload" type="file" onChange={(event) => {this.onChange(event,3) }} onClick={(event) => {event.target.value = null}} /></td>
                             </tr>
                         </tbody>
-                    </table>
+                    </Table>
+                </div>
+                <div class="rightContainer">
+                    <iframe src={this.state.file} />
                 </div>
             </div>
         );

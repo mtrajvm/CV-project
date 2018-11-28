@@ -45,19 +45,18 @@ class UserList extends Component {
     }
 
     updatePrivilage = (user) => {
-        console.log(user)
-        const details = Object.create(null,{
-            userName:{value:user.userName},
-            accountType:{value:user.accountType},
-        })
-        console.log(details)
+
+        const details = {
+            userName:user.userName,
+            accountType:user.accountType,
+        }
         fetch('/api/admin/user/'+user.userName,{
             method:'PUT',
             headers:{
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(details)
-        }).then(res=>console.log(res))
+        }).then(res=>console.log(res.json()))
     }
 
     nextPath = (path) => {
@@ -86,11 +85,10 @@ class UserList extends Component {
         let filteredNames = this.state.users.filter(user => user.userName.toLowerCase().search(this.state.searchString.toLowerCase()) !== -1)
 
         return (
-            <div class="container">
-                <div class="one">
-                    <InformationComponent userName={this.state.hoveredUser} />
-                </div>
-                <div class="two">
+            <div>
+                 <InformationComponent className="infoContainer" userName={this.state.hoveredUser} />
+
+                <div className="mainContainer">
                     <h4><Link to="/create"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add User</Link></h4>
                     <input type="text" value={this.state.searchString} onChange={this.filterList.bind(this)} placeholder="Search..." />
 

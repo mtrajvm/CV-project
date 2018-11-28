@@ -7,7 +7,7 @@ export default class Footer extends Component {
 
 render() {
   return (
-      <StickyFooter
+      <div
     bottomThreshold={50}
     normalStyles={{
     backgroundColor: "rgba(255,255,255,.0)",
@@ -41,7 +41,7 @@ render() {
       </Grid>
 
 
-    </StickyFooter>
+    </div>
         
   )
 }
