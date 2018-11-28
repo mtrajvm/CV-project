@@ -73,6 +73,8 @@ class Login extends Component {
                         sessionStorage.setItem('accounType', data.accountType);
                         sessionStorage.setItem('id', data.id);
                         sessionStorage.setItem('userName', data.userName);
+                        sessionStorage.setItem('firstName', data.firstName);
+                        sessionStorage.setItem('surName', data.surName);
                 }
                 this.props.history.push({
                     pathname: '/List',

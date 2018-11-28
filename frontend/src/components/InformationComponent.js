@@ -10,13 +10,16 @@ class InformationComponent extends Component {
   }
 
   render() {
+    if(this.props.details !=null){
+    var userName = this.props.details.userName;
+    var firstName = this.props.details.firstName;
+    var surName = this.props.details.surName;
+    }
+
     return (
-      <div class="container">
-        <div class="panel panel-default">
-            <h3 class="panel-title">
-             {this.props.userName}
-            </h3>
-        </div>
+      <div >
+            {userName}<br/>
+            {firstName}    {surName}
       </div>
     );
   }

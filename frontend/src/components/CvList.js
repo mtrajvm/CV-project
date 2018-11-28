@@ -110,21 +110,20 @@ class CvList extends Component {
 
 
     render() {
-        let pdfData = null;
-        if (this.state.cvs != null) {
-            let pdfData = this.state.cvs.data;
-        }
         return (
             <div >
                 <div class="infoContainer">
-                    </div>
+                    <div> {sessionStorage.getItem('userName')}</div>
+                     <div> {sessionStorage.getItem('firstName')}</div>
+                      <div> {sessionStorage.getItem('surName')}</div>
+                </div>
 
                 <div class="listContainer">
                     <h4>
 
                       
                     </h4>
-                    <Table  >
+                    <Table  hover>
                         <thead>
                             <tr>
                                 <th>File Name</th>

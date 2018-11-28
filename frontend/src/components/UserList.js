@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Edit from './Edit';
 import {
-    Container, Col, Form,
+    Container, Col, Form,Table,
     FormGroup, Label, Input,
     Button, FormFeedback, Dropdown, DropdownToggle, DropdownMenu, DropdownItem
 } from 'reactstrap';
@@ -22,12 +22,8 @@ class UserList extends Component {
     componentDidMount() {
         axios.get('/api/admin/users')
             .then(res => {
-
-                this.setState({ users: res.data });
-                
+                this.setState({ users: res.data });               
                 this.state.users.forEach(users =>  {users.dropdownOpen = false; });
-                // just for checking
-                console.log(this.state.users);
             });
     }
 
@@ -56,7 +52,7 @@ class UserList extends Component {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(details)
-        }).then(res=>console.log(res.json()))
+        })
     }
 
     nextPath = (path) => {
@@ -86,13 +82,14 @@ class UserList extends Component {
 
         return (
             <div>
-                 <InformationComponent className="infoContainer" userName={this.state.hoveredUser} />
-
-                <div className="mainContainer">
+                <div class="infoContainer">
+                 <InformationComponent className="infoContainer" details={this.state.hoveredUser} />
+                </div>
+                <div class="listContainer">
                     <h4><Link to="/create"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add User</Link></h4>
                     <input type="text" value={this.state.searchString} onChange={this.filterList.bind(this)} placeholder="Search..." />
 
-                    <table class="table table-stripe">
+                    <Table hover>
                         <thead>
                             <tr>
                                 <th>UserName</th>
@@ -104,11 +101,18 @@ class UserList extends Component {
                         </thead>
                         <tbody >
                             {filteredNames.map(user =>
-                                <tr onMouseEnter={() => this.setState({ hoveredUser: user.userName })}>
+                                <tr onMouseEnter={() => {   
+                                    const de = Object.create(null,{
+                                        userName:{value :user.userName},
+                                        firstName:{value:user.firstName},
+                                        surName:{value:user.surName},
+                                    })
+                                    this.setState({ hoveredUser: de})
+                                    }}>
                                     <td><Link to={`/Show/${user.id}`}>{user.userName}</Link></td>
                                     <td>{user.accountType}</td>
-                                    <td>  <Dropdown isOpen={user.dropdownOpen} toggle={()=>this.toggle(user)}>
-                                            <DropdownToggle caret>
+                                    <td>  <Dropdown   isOpen={user.dropdownOpen} toggle={()=>this.toggle(user)} >
+                                            <DropdownToggle style={{width: 150}} caret>
                                                  {user.accountType}
                                             </DropdownToggle>
                                             <DropdownMenu>
@@ -127,7 +131,7 @@ class UserList extends Component {
                                 </tr>
                             )}
                         </tbody>
-                    </table>
+                    </Table>
                 </div>
             </div>
         );

@@ -31,7 +31,7 @@ class Create extends Component {
       },
       body: JSON.stringify(details)
     });
-    this.props.history.push("/")  
+    this.props.history.push("/List")  
   }
 
   render() {

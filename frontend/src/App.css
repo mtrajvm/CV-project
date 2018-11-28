@@ -47,8 +47,20 @@
     float: left;
 }
 
+.logout{
+  margin-left: 1000;
+}
+
+.header {
+
+
+}
+
+.drop{
+  width:100px;
+}
 .infoContainer {
-    margin-top: 50px;
+    margin-top: 100px;
     padding-left: 10px;
     width: 400px;
     height: 600px;

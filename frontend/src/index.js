@@ -11,13 +11,16 @@ import Create from './components/Create';
 import Edit from './components/Edit';
 import Home from './components/Home';
 import Login from './components/Login';
+import Logout from './components/Logout';
 import Register from './components/Register';
 import List from './components/List';
 import Footer from './components/Footer';
+import history from "./components/history";
 
 ReactDOM.render(
 <div class="mainContainer">
-      <Router>
+
+      <Router history={history}>
         <Switch>
             <Route path='/' exact={true} component={Login} />
             <Route path='/Register' exact={true} component={Register} />

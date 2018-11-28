@@ -10,6 +10,7 @@ import {
     FormGroup, Label, Input,
     Button, FormFeedback,
 } from 'reactstrap';
+import Logout from './Logout';
 import InformationComponent from './InformationComponent';
 class List extends Component {
 
@@ -41,6 +42,9 @@ class List extends Component {
 
         return (
             <div class="changingContainer">
+                <div class="logout">
+                    <Logout/>
+                </div>
                 {list}
             </div>
         );
