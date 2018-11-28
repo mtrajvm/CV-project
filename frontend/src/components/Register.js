@@ -73,12 +73,12 @@ class Login extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    const details = Object.create(null, {
-            userName: {value:this.state.email, enumerable: true},
-            password: {value:this.state.password, enumerable: true},
-            firstName: {value:this.state.firstName},
-            surName: {value:this.state.surName}
-        })
+    const details =  {
+            userName: this.state.email,
+            password:this.state.password,
+            firstName: this.state.firstName,
+            surName: this.state.surName
+        }
   
     fetch('/api/createaccount/user', {   
       method : 'POST',
@@ -87,10 +87,10 @@ class Login extends Component {
         'Accept' : 'application/json'
       },
       body: JSON.stringify(details)
-    }).then(res=>{console.log(res.json())
-    return true;
+    }).then(res=>{
+      this.props.history.push('/')
     })
-    return false;
+
     
   }
 

@@ -48,11 +48,11 @@ class SalesUserList extends Component {
         let filteredNames = this.state.users.filter(user => user.userName.toLowerCase().search(this.state.searchString.toLowerCase()) !== -1)
 
         return (
-            <div class="container">
-                <div class="one">
+            <div >
+                <div class="infoContainer">
                     <InformationComponent userName={this.state.hoveredUser} />
                 </div>
-                <div class="two">
+                <div class="smallList">
                     <input type="text" value={this.state.searchString} onChange={this.filterList.bind(this)} placeholder="Search..." />
 
                     <Table hover class="table table-stripe">
@@ -75,6 +75,9 @@ class SalesUserList extends Component {
                         </tbody>
                     </Table >
                 </div>
+                <div class="rightContainer">
+                    
+                    </div>
             </div>
         );
     }

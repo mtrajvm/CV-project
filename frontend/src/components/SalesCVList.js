@@ -92,10 +92,8 @@ class TraineeManCvList extends Component {
             <div >
                 <Logout/>
                 <div class="infoContainer">
-                    
-                    </div>
-
-                <div class="listContainer">
+                </div>
+                <div class="smallList">
                     <h4>
                         {this.props.location.state.userData.userName}
                     </h4>

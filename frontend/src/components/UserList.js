@@ -92,7 +92,6 @@ class UserList extends Component {
                         <thead>
                             <tr>
                                 <th>UserName</th>
-                                <th>AccountType</th>
                                 <th colspan="3"><Button  style={{width: 400, height: 60}} ><Link to="/create" style={{color:"white"}}><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add User</Link></Button></th>
          
                             </tr>
@@ -108,7 +107,6 @@ class UserList extends Component {
                                     this.setState({ hoveredUser: de})
                                     }}>
                                     <td><Link to={`/Show/${user.id}`}>{user.userName}</Link></td>
-                                    <td>{user.accountType}</td>
                                     <td>  <Dropdown   isOpen={user.dropdownOpen} toggle={()=>this.toggle(user)} >
                                             <DropdownToggle style={{width: 150}} caret>
                                                  {user.accountType}
@@ -129,7 +127,6 @@ class UserList extends Component {
                         </tbody>
                     </Table>
                     </div>
-
                 </div>
                 <div class="rightContainer">
                                     

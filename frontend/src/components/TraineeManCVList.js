@@ -11,6 +11,7 @@ import {
 import InformationComponent from './InformationComponent';
 import { Document } from 'react-pdf'
 import Logout from './Logout'
+import FileSaver from 'file-saver';
 
 class TraineeManCvList extends Component {
 
@@ -26,30 +27,26 @@ class TraineeManCvList extends Component {
             cv2: data,
             cv3: data,
             file: null,
+            toDownload:null,
             cv1Selected: [],
         };
         this.onChange = this.onChange.bind(this)
         this.onRadioBtnClick = this.onRadioBtnClick.bind(this);
+        this.donwloadFile = this.donwloadFile.bind(this);
     }
 
     componentDidMount() {
 
         const traineeData = this.props.location.state.userData
 
-        console.log(traineeData.id)
-        console.log(this.state.cv1.fileFlag)
 
         axios.get('/api/traineemanager/cvdownload/1/' + traineeData.id)
         .then(res => {
-
             if (res.data.fileBinaryData != null) {
                 const toShow = "data:application/pdf;base64," + res.data.fileBinaryData.data;
-                console.log(res.data.fileFlag)
                 this.setState({ cv1: res.data });
-                console.log(this.state.cv1.fileFlag)
                 this.setState({ file: toShow });
-            }
-            
+            }        
         });
 
 
@@ -81,14 +78,18 @@ class TraineeManCvList extends Component {
     }
 
 
+    donwloadFile= () =>{
+        console.log("hihi")
+        console.log(this.state.file)
+        var blob = new Blob([this.state.file], {type: "application/pdf"});
+        FileSaver.saveAs(blob, "this.pdf");
+    }
+
     nextPath = (path) => {
         this.props.history.push(path);
     }
 
     changeFlag = (flag, cv, thisCV) => {
-        console.log(flag)
-        console.log(cv)
-
         axios.put('/api/traineemanager/cvflag/'+ cv +'/'+ this.props.location.state.userData.id +'/'+ flag )
         .then(thisCV.fileFlag = flag).then(this.forceUpdate())
             ;
@@ -101,17 +102,11 @@ class TraineeManCvList extends Component {
 
 
     render() {
-        let pdfData = null;
-        if (this.state.cvs != null) {
-            let pdfData = this.state.cvs.data;
-        }
 
         return (
             <div >
                 <Logout/>
-                <div class="infoContainer">
-                    
-                    </div>
+
 
                 <div class="listContainer">
                     <h4>
@@ -143,6 +138,9 @@ class TraineeManCvList extends Component {
                                 </Row>
                                     </Container>
                                 </ButtonGroup>
+                                <td>
+                                    <Button onClick={(e)=>this.donwloadFile(e)} >Download Selected</Button>
+                                </td>
                             </tr>
 
                             <tr >

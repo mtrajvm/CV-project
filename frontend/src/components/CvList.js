@@ -6,7 +6,7 @@ import Edit from './Edit';
 import {
     Container, Col, Form,
     FormGroup, Label, Input,
-    Button, FormFeedback,
+    Button, FormFeedback, Table,
 } from 'reactstrap';
 import InformationComponent from './InformationComponent';
 import { Document } from 'react-pdf'
@@ -152,15 +152,15 @@ class CvList extends Component {
         console.log(this.state.cv1);
         return (
             <div >
-                <div class="infoContainer">
+                <div class="cvContainer">
                     <iframe src={this.state.file}/>
                 </div>
-                <div class="listContainer">
+                <div class="cvlistContainer">
                     <h4>
 
                       CV List
                     </h4>
-                    <table class="table table-stripe">
+                    <Table class="table table-stripe">
                         <thead>
                             <tr>
                                 <th>File Name</th>
@@ -190,9 +190,9 @@ class CvList extends Component {
                                <td> <input id="upload" ref="upload" type="file" onChange={(event) => {this.onChange(event,3, this.state.cv3) }} onClick={(event) => {event.target.value = null}} /></td>
                             </tr>
                         </tbody>
-                    </table>
+                    </Table>
                 </div>
-                              <div class="rightContainer">
+                <div class="rightContainer">
                                     
 
                 </div>
