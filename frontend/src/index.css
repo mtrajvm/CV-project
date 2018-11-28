@@ -6,7 +6,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: linear-gradient( rgb(169, 169, 169, 0.5), rgb(169, 169, 169, 0.15));
+  background-image: linear-gradient( rgb(175, 150, 185, 0.3), rgb(180, 145, 200, 0.4));
 
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -18,9 +18,9 @@ code {
 }
 
 iframe {
-    height: 600px;
-    width:400px;
-
+    height: 100%;
+    width: 400px;
+   padding-left: 15px;
 
 }
 

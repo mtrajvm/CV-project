@@ -13,10 +13,7 @@ render() {
     backgroundColor: "rgba(255,255,255,.0)",
     padding: "2rem"
     }}
-    stickyStyles={{
-    backgroundColor: "rgba(255,255,255,.0)",
-    padding: "2rem"
-    }}
+
 >
       <Grid>
         <Nav justified>

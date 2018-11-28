@@ -23,7 +23,7 @@ class Create extends Component {
     e.preventDefault();
     const { details} = this.state;
     console.log(details);
-    fetch('/api/user', {   
+    fetch('/api/createaccount/user', {   
       method : 'POST',
       headers: {
         'Content-Type' : 'application/json',

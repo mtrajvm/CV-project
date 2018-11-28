@@ -106,7 +106,7 @@ class Login extends Component {
     render() {
         const { email, password } = this.state;
         return (
-            <Container>
+            <Container class="changingContainer">
 
                 <h3 class="panel-title">
                     LOGIN PAGE

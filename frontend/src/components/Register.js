@@ -79,31 +79,21 @@ class Login extends Component {
             firstName: {value:this.state.firstName},
             surName: {value:this.state.surName}
         })
-    console.log(JSON.stringify(details));
     //return
-    fetch('/api/user', {   
+    fetch('/api/createaccount/user', {   
       method : 'POST',
       headers: {
         'Content-Type' : 'application/json',
         'Accept' : 'application/json'
       },
       body: JSON.stringify(details)
-    });
-
+    }).then(res=>{console.log(res.json())
     return true;
+    })
+    return false;
+    
   }
 
-  submitForm = (e) => {
-    if(this.onSubmit(e))
-      {
-        this.state.validate.registration = 'has-success'
-        this.props.history.push("/")
-      }
-      else
-      {
-        this.state.validate.registration = 'has-success'
-      }
-  }
 
   render() {
     const { firstName, surName, email, password, passwordConfirm } = this.state;
@@ -114,9 +104,9 @@ class Login extends Component {
             </h3>
 
         
-        <Form className="form" onSubmit={(event) => this.submitFrom(event)}>
+        <Form className="form" onSubmit={(event) => this.onSubmit(event)}>
               <FormGroup row>
-                <Label for="firstName" sm={2} md={{ size: 6, offset: 3 }}>Email</Label>
+                <Label for="firstName" sm={2} md={{ size: 6, offset: 3 }}>First Name</Label>
                 <Col sm={12} md={{ size: 6, offset: 3 }}>
                 <Input 
                     type="text"
@@ -132,7 +122,7 @@ class Login extends Component {
             </FormGroup>
 
               <FormGroup row>
-                <Label for="surName" sm={2} md={{ size: 6, offset: 3 }}>Email</Label>
+                <Label for="surName" sm={2} md={{ size: 6, offset: 3 }}>Surname</Label>
                 <Col sm={12} md={{ size: 6, offset: 3 }}>
                 <Input 
                     type="text"

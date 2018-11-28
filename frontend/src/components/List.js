@@ -5,6 +5,7 @@ import axios from 'axios';
 import Edit from './Edit';
 import UserList from './UserList';
 import CvList from './CvList';
+import SalesUserList from './SalesUserList';
 import {
     Container, Col, Form,
     FormGroup, Label, Input,
@@ -38,14 +39,23 @@ class List extends Component {
             list = <UserList />;
         } else if (sessionStorage.getItem('accounType') == "trainee") {
             list = <CvList details={this.props.location.details} />;
+        }   else if (sessionStorage.getItem('accounType') == "traineemanager") {
+            this.props.history.push('/TraineeManList')
+        }
+        else if (sessionStorage.getItem('accounType') == "sales") {
+           this.props.history.push('/SalesList')
         }
 
-        return (
-            <div class="changingContainer">
-                <div class="logout">
+        return (       
+            
+           <div> 
+            <div class="logout">
                     <Logout/>
                 </div>
+            <div class="changingContainer">
+
                 {list}
+            </div>
             </div>
         );
     }

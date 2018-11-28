@@ -6,7 +6,7 @@ import Edit from './Edit';
 import {
     Container, Col, Form,
     FormGroup, Label, Input,
-    Button, FormFeedback, Table
+    Button, FormFeedback,
 } from 'reactstrap';
 import InformationComponent from './InformationComponent';
 import { Document } from 'react-pdf'
@@ -70,25 +70,59 @@ class CvList extends Component {
 
     }
 
-    async onChange(e,id) {
+    async onChange(e,id, cv) {
         await this.setState({ file: e.target.files[0] });
-        this.fileUpload(id);
+        this.fileUpload(id, cv);
     }
 
-    remove = (id) => {
+    remove = (id, cv) => {
+        console.log("delete")
         fetch('/api/trainee/cvdelete/' + id + "/" +sessionStorage.getItem('id'), {
             method: 'DELETE',
         }).then(res=> console.log(res.status))
+        
+        axios.delete('http://localhost:8081/email', 
+                {
+                  fileName: "file",
+                  email: sessionStorage.getItem('userName')  
+                }
+        )
+        .then(cv.fileName = "file deleted").then(this.forceUpdate());
     }
 
 
-    fileUpload = (id) => {
+    fileUpload = (id, cv) => {
         const formData = new FormData();
         formData.append('file', this.state.file)
         fetch('/api/trainee/cvupload/' + id + '/' + sessionStorage.getItem('id') ,  {
             method: 'POST',
             body: formData
         })
+
+        if(cv.fileName == "file not added")
+        {
+                axios.post('http://localhost:8081/email', 
+                {
+                  fileName: cv.fileName,
+                  email: sessionStorage.getItem('userName')  
+                }
+                ).then(cv.fileName = "File uploaded").then(this.forceUpdate());
+        }
+        else
+        {
+            axios.put('http://localhost:8081/email', 
+                {
+                  fileName: cv.fileName,
+                  email: sessionStorage.getItem('userName')  
+                }
+                ).then(cv.fileName = "File uploaded").then(this.forceUpdate());
+        }
+            
+        
+
+
+            
+        ;
 
 
     }
@@ -110,20 +144,23 @@ class CvList extends Component {
 
 
     render() {
+        let pdfData = null;
+        if (this.state.cvs != null) {
+            let pdfData = this.state.cvs.data;
+        }
+
+        console.log(this.state.cv1);
         return (
             <div >
                 <div class="infoContainer">
-                    <div> {sessionStorage.getItem('userName')}</div>
-                     <div> {sessionStorage.getItem('firstName')}</div>
-                      <div> {sessionStorage.getItem('surName')}</div>
+                    <iframe src={this.state.file}/>
                 </div>
-
                 <div class="listContainer">
                     <h4>
 
-                      
+                      CV List
                     </h4>
-                    <Table  hover>
+                    <table class="table table-stripe">
                         <thead>
                             <tr>
                                 <th>File Name</th>
@@ -132,31 +169,32 @@ class CvList extends Component {
                         </thead>
                         <tbody >
 
-                            <tr class="hoverable" onClick={() => this.changePdf(1)} >
+                            <tr onClick={()=>this.changePdf(1)}>
                                 <td>{this.state.cv1.fileName}</td>
                                  <td><Button color={this.state.cv1.fileFlag}  disabled>Flag</Button></td>
-                                <td><button onClick={() => { if (this.state.cv1.fileBinaryData != null) { this.remove(1) } }}>delete</button></td>
-                                <td> <input id="upload" ref="upload" type="file" onChange={(event) => {this.onChange(event,1) }} onClick={(event) => {event.target.value = null}} /></td>
+                                <td><button onClick={() => { if (this.state.cv1.fileBinaryData != null) { this.remove(1, this.state.cv1) } }}>delete</button></td>
+                                <td> <input id="upload" ref="upload" type="file" onChange={(event) => {this.onChange(event,1, this.state.cv1) }} onClick={(event) => {event.target.value = null}} /></td>
                             </tr>
 
-                            <tr class="hoverable" onClick={()=>this.changePdf(2)}>
+                            <tr onClick={()=>this.changePdf(2)}>
                                 <td>{this.state.cv2.fileName}</td>
                                  <td><Button color={this.state.cv2.fileFlag}  disabled>Flag</Button></td>
-                                     <td><button onClick={() => { if (this.state.cv1.fileBinaryData != null) { this.remove(2) } }}>delete</button></td>
-                                <td> <input id="upload" ref="upload" type="file" onChange={(event) => {this.onChange(event,2) }} onClick={(event) => {event.target.value = null}} /></td>
+                                     <td><button onClick={() => { if (this.state.cv1.fileBinaryData != null) { this.remove(2, this.state.cv2) } }}>delete</button></td>
+                                <td> <input id="upload" ref="upload" type="file" onChange={(event) => {this.onChange(event,2, this.state.cv2) }} onClick={(event) => {event.target.value = null}} /></td>
                             </tr>
 
-                            <tr class="hoverable" onClick={()=>this.changePdf(3)}>
+                            <tr onClick={()=>this.changePdf(3)}>
                                 <td>{this.state.cv3.fileName}</td>
                                  <td><Button color={this.state.cv3.fileFlag}  disabled>Flag</Button></td>
-                                <td><button onClick={() => { if (this.state.cv1.fileBinaryData != null) { this.remove(3) } }}>delete</button></td>
-                               <td> <input id="upload" ref="upload" type="file" onChange={(event) => {this.onChange(event,3) }} onClick={(event) => {event.target.value = null}} /></td>
+                                <td><button onClick={() => { if (this.state.cv1.fileBinaryData != null) { this.remove(3, this.state.cv3) } }}>delete</button></td>
+                               <td> <input id="upload" ref="upload" type="file" onChange={(event) => {this.onChange(event,3, this.state.cv3) }} onClick={(event) => {event.target.value = null}} /></td>
                             </tr>
                         </tbody>
-                    </Table>
+                    </table>
                 </div>
-                <div class="rightContainer">
-                    <iframe src={this.state.file} />
+                              <div class="rightContainer">
+                                    
+
                 </div>
             </div>
         );

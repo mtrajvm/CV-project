@@ -27,15 +27,15 @@ class UserList extends Component {
             });
     }
 
-    remove = (id) => {
-        fetch('/api/admin/user/' + id, {
+    remove = (user) => {
+        fetch('/api/admin/user/' + user.userName, {
             method: 'delete',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             }
         }).then(() => {
-            let updateUsers = [...this.state.users].filter(i => i.id !== id);
+            let updateUsers = [...this.state.users].filter(i => i.id !== user.id);
             this.setState({ users: updateUsers });
         });
     }
@@ -83,20 +83,18 @@ class UserList extends Component {
         return (
             <div>
                 <div class="infoContainer">
-                 <InformationComponent className="infoContainer" details={this.state.hoveredUser} />
+                 <InformationComponent  details={this.state.hoveredUser} />
                 </div>
-                <div class="listContainer">
-                    <h4><Link to="/create"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add User</Link></h4>
+                <div class="listContainer" >
                     <input type="text" value={this.state.searchString} onChange={this.filterList.bind(this)} placeholder="Search..." />
-
-                    <Table hover>
+                    <div class="table-wrapper-scroll-y">
+                    <Table  hover bordered>
                         <thead>
                             <tr>
                                 <th>UserName</th>
-                                <th>Password</th>
                                 <th>AccountType</th>
-                                <th>First Name</th>
-                                <th>Second Name</th>
+                                <th colspan="3"><Button  style={{width: 400, height: 60}} ><Link to="/create" style={{color:"white"}}><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add User</Link></Button></th>
+         
                             </tr>
                         </thead>
                         <tbody >
@@ -124,14 +122,18 @@ class UserList extends Component {
                                             <DropdownItem onClick={()=>this.changeAccountType(user,'sales')}>sales team</DropdownItem>
                                             </DropdownMenu>
                                         </Dropdown></td>
-                                    <td>{user.firstName}</td>
-                                    <td>{user.surName}</td>
-                                    <td><button onClick={() => this.remove(user.id)}>delete</button></td>
+                                    <td><button onClick={() => this.remove(user)}>delete</button></td>
                                     <td><button onClick={() => this.updatePrivilage(user)}>update</button></td>
                                 </tr>
                             )}
                         </tbody>
                     </Table>
+                    </div>
+
+                </div>
+                <div class="rightContainer">
+                                    
+
                 </div>
             </div>
         );
