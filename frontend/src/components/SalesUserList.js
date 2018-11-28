@@ -25,10 +25,7 @@ class SalesUserList extends Component {
     componentDidMount() {
         axios.get('/api/sales/trainees')
             .then(res => {
-
                 this.setState({ users: res.data });
-                // just for checking
-                console.log(this.state.users);
             });
     }
 
@@ -41,7 +38,6 @@ class SalesUserList extends Component {
     }
 
     pushToUser = (user) => {
-        console.log(user)
         this.props.history.push('/SalesShow',
         {
             userData: user

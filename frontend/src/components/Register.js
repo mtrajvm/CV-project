@@ -79,7 +79,7 @@ class Login extends Component {
             firstName: {value:this.state.firstName},
             surName: {value:this.state.surName}
         })
-    //return
+  
     fetch('/api/createaccount/user', {   
       method : 'POST',
       headers: {

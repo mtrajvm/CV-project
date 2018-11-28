@@ -25,10 +25,7 @@ class TraineeManUserList extends Component {
     componentDidMount() {
         axios.get('/api/traineemanager/trainees')
             .then(res => {
-
                 this.setState({ users: res.data });
-                // just for checking
-                console.log(this.state.users);
             });
     }
 

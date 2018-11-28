@@ -82,13 +82,7 @@ class Login extends Component {
 
                 })});
 
-
-
-        // added by Michal
-
     }
-
-
 
     submitForm = (e) => {
         e.preventDefault();
@@ -99,7 +93,6 @@ class Login extends Component {
     }
 
     logout() {
-        // remove user from local storage to log user out
         localStorage.removeItem('user');
     }
 

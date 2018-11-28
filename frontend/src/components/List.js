@@ -20,10 +20,7 @@ class List extends Component {
         this.state = {
             users: [],
 
-        };
-        // this is the user details for logged person
-
-       
+        }; 
     }
 
 
