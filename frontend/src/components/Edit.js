@@ -48,8 +48,10 @@ class Edit extends Component {
   render() {
     const { details} = this.state;
     return (
-      <div class="container">
-        <div class="panel panel-default">
+      <div >
+      <div class="infoContainer">
+                </div>
+        <div class="edit">
           <div class="panel-heading">
             <h3 class="panel-title">
               EDIT User

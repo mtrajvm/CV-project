@@ -36,15 +36,15 @@
 
 
 .logout{
-  margin-left: 1000;
+  margin-left: 90%;
 }
 
 
 
 .table-wrapper-scroll-y {
 display: block;
-max-height: 100%;
-max-width: 100%;
+max-height: 95%;
+max-width: 90%;
 overflow-y: auto;
 -ms-overflow-style: -ms-autohiding-scrollbar;
 }
@@ -56,21 +56,56 @@ overflow-y: auto;
 .mainContainer {
 
   width: 100%;
-  height: 1000px;
+  height: 100%;
  
 
 }
-.smallList{
+.edit{
+  background-color:white;
+  -webkit-box-shadow: 6px 10px 55px -9px rgba(0,0,0,0.75);
+-moz-box-shadow: 6px 10px 55px -9px rgba(0,0,0,0.75);
+box-shadow: 6px 10px 55px -9px rgba(0,0,0,0.75);
+padding:10px;
   margin-top : 50px;
-  width: 30%;
+  width: 60%;
+  height: 450px;
+  float: left;
+}
+.smallList{
+  background-color:white;
+  -webkit-box-shadow: 6px 10px 55px -9px rgba(0,0,0,0.75);
+-moz-box-shadow: 6px 10px 55px -9px rgba(0,0,0,0.75);
+box-shadow: 6px 10px 55px -9px rgba(0,0,0,0.75);
+padding:10px;
+  margin-top : 50px;
+  width: 40%;
   height: 650px;
   float: left;
 }
 
-.listContainer {
+.login{
+  background-color:white;
+  -webkit-box-shadow: 6px 10px 55px -9px rgba(0,0,0,0.75);
+-moz-box-shadow: 6px 10px 55px -9px rgba(0,0,0,0.75);
+box-shadow: 6px 10px 55px -9px rgba(0,0,0,0.75);
+padding:10px;
+margin-left:35%;
   margin-top : 50px;
-  width: 51%;
-  height: 650px;
+  width: 40%;
+  height: 350px;
+  float: left;
+
+}
+.listContainer {
+  background-color:white;
+  -webkit-box-shadow: 6px 10px 55px -9px rgba(0,0,0,0.75);
+-moz-box-shadow: 6px 10px 55px -9px rgba(0,0,0,0.75);
+box-shadow: 6px 10px 55px -9px rgba(0,0,0,0.75);
+  margin-top : 50px;
+  width: 63%;
+  height: 700px;
+  padding:15px;
+  padding-left: 50px;
   float: left;
 }
 
@@ -85,18 +120,24 @@ overflow-y: auto;
   margin-top : 50px;
   width: 30%;
   height: 650px;
+  padding-left: 15px;
   float: left;
 }
 .cvlistContainer{
+  background-color:white;
+  -webkit-box-shadow: 6px 10px 55px -9px rgba(0,0,0,0.75);
+  -moz-box-shadow: 6px 10px 55px -9px rgba(0,0,0,0.75);
+  box-shadow: 6px 10px 55px -9px rgba(0,0,0,0.75);
   margin-top : 50px;
   width: 40%;
-  height: 650px;
+  height: 450px;
+  padding:20px;
   float: left;
 }
 .rightContainer {
     margin-top: 50px;
     width:25%;
-    height: 600px;
+    height: 650px;
     float: left;
 }
 

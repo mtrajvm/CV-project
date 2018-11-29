@@ -10,6 +10,7 @@ import {
 } from 'reactstrap';
 import InformationComponent from './InformationComponent';
 import { Document } from 'react-pdf'
+import FileSaver from 'file-saver';
 class CvList extends Component {
 
     constructor(props) {
@@ -22,6 +23,7 @@ class CvList extends Component {
             cv1: data,
             cv2: data,
             cv3:data,
+            toDownload:null,
             file: null,
         };
         this.onFormSubmit = this.onFormSubmit.bind(this)
@@ -42,6 +44,7 @@ class CvList extends Component {
 
                 if (res.data.fileBinaryData != null) {
                     const toShow = "data:application/pdf;base64," + res.data.fileBinaryData.data;
+                    this.setState({ toDownload: res.data.fileBinaryData.data})        
                     this.setState({ cv1: res.data });
                     this.setState({ file: toShow });
                 }
@@ -54,6 +57,7 @@ class CvList extends Component {
 
                 if (res.data.fileBinaryData != null) {
                     const toShow = "data:application/pdf;base64," + res.data.fileBinaryData.data;
+                    this.setState({ toDownload: res.data.fileBinaryData.data})    
                     this.setState({ cv2: res.data });
                     this.setState({ cv2: res.data });
                 }
@@ -65,6 +69,7 @@ class CvList extends Component {
 
                 if (res.data.fileBinaryData != null) {
                     const toShow = "data:application/pdf;base64," + res.data.fileBinaryData.data;
+                    this.setState({ toDownload: res.data.fileBinaryData.data})                    
                     this.setState({ cv3: res.data });
                     this.setState({ cv3: res.data });
                 }
@@ -128,6 +133,11 @@ class CvList extends Component {
 
     }
 
+    donwloadFile = () => {
+        var blob = new Blob([window.atob(this.state.toDownload)], { type: 'application/pdf"'});
+        FileSaver.saveAs(blob, "this.pdf");
+    }
+
     changePdf = (id) =>{
         axios.get('/api/trainee/cvdownload/'+id+ '/' +sessionStorage.getItem('id'))
             .then(res => {
@@ -156,7 +166,7 @@ class CvList extends Component {
                 <div class="cvContainer">
                     <iframe src={this.state.file}/>
                 </div>
-                <div class="cvlistContainer">
+                <div class="cvlistContainer" background-color="white">
                     <h4>
 
                       CV List
@@ -192,6 +202,9 @@ class CvList extends Component {
                             </tr>
                         </tbody>
                     </Table>
+                    
+                    <Button onClick={(e)=>this.donwloadFile(e)} >Download Selected</Button>
+                               
                 </div>
                 <div class="rightContainer">
                                     

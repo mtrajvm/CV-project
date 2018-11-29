@@ -83,9 +83,9 @@ class UserList extends Component {
         return (
             <div>
                 <div class="infoContainer">
-                 <InformationComponent  details={this.state.hoveredUser} />
+                
                 </div>
-                <div class="listContainer" >
+                <div class="listContainer" background-color="white">
                     <input type="text" value={this.state.searchString} onChange={this.filterList.bind(this)} placeholder="Search..." />
                     <div class="table-wrapper-scroll-y">
                     <Table  hover bordered>
@@ -106,7 +106,7 @@ class UserList extends Component {
                                     })
                                     this.setState({ hoveredUser: de})
                                     }}>
-                                    <td><Link to={`/Show/${user.id}`}>{user.userName}</Link></td>
+                                    <td><Link to={`/edit/${user.id}`} >{user.userName}</Link></td>
                                     <td>  <Dropdown   isOpen={user.dropdownOpen} toggle={()=>this.toggle(user)} >
                                             <DropdownToggle style={{width: 150}} caret>
                                                  {user.accountType}

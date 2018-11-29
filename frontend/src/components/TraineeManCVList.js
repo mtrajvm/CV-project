@@ -28,7 +28,6 @@ class TraineeManCvList extends Component {
             cv3: data,
             file: null,
             toDownload:null,
-            cv1Selected: [],
         };
         this.onChange = this.onChange.bind(this)
         this.onRadioBtnClick = this.onRadioBtnClick.bind(this);
