@@ -9,6 +9,7 @@ import {
     Button, FormFeedback, Dropdown, DropdownToggle, DropdownMenu, DropdownItem
 } from 'reactstrap';
 import InformationComponent from './InformationComponent';
+import Logout from './Logout';
 class UserList extends Component {
 
     constructor(props) {
@@ -82,17 +83,17 @@ class UserList extends Component {
 
         return (
             <div>
+                <Logout/>
                 <div class="infoContainer">
-                 <InformationComponent  details={this.state.hoveredUser} />
+                
                 </div>
-                <div class="listContainer" >
+                <div class="listContainer" background-color="white">
                     <input type="text" value={this.state.searchString} onChange={this.filterList.bind(this)} placeholder="Search..." />
                     <div class="table-wrapper-scroll-y">
                     <Table  hover bordered>
                         <thead>
                             <tr>
                                 <th>UserName</th>
-                                <th>AccountType</th>
                                 <th colspan="3"><Button  style={{width: 400, height: 60}} ><Link to="/create" style={{color:"white"}}><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add User</Link></Button></th>
          
                             </tr>
@@ -107,8 +108,7 @@ class UserList extends Component {
                                     })
                                     this.setState({ hoveredUser: de})
                                     }}>
-                                    <td><Link to={`/Show/${user.id}`}>{user.userName}</Link></td>
-                                    <td>{user.accountType}</td>
+                                    <td><Link to={`/edit/${user.id}`} >{user.userName}</Link></td>
                                     <td>  <Dropdown   isOpen={user.dropdownOpen} toggle={()=>this.toggle(user)} >
                                             <DropdownToggle style={{width: 150}} caret>
                                                  {user.accountType}
@@ -129,7 +129,6 @@ class UserList extends Component {
                         </tbody>
                     </Table>
                     </div>
-
                 </div>
                 <div class="rightContainer">
                                     

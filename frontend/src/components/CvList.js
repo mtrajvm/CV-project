@@ -6,10 +6,12 @@ import Edit from './Edit';
 import {
     Container, Col, Form,
     FormGroup, Label, Input,
-    Button, FormFeedback,
+    Button, FormFeedback, Table,
 } from 'reactstrap';
 import InformationComponent from './InformationComponent';
 import { Document } from 'react-pdf'
+import FileSaver from 'file-saver';
+import Logout from './Logout';
 class CvList extends Component {
 
     constructor(props) {
@@ -22,6 +24,7 @@ class CvList extends Component {
             cv1: data,
             cv2: data,
             cv3:data,
+            toDownload:null,
             file: null,
         };
         this.onFormSubmit = this.onFormSubmit.bind(this)
@@ -42,6 +45,7 @@ class CvList extends Component {
 
                 if (res.data.fileBinaryData != null) {
                     const toShow = "data:application/pdf;base64," + res.data.fileBinaryData.data;
+                    this.setState({ toDownload: res.data.fileBinaryData.data})        
                     this.setState({ cv1: res.data });
                     this.setState({ file: toShow });
                 }
@@ -53,6 +57,8 @@ class CvList extends Component {
             .then(res => {
 
                 if (res.data.fileBinaryData != null) {
+                    const toShow = "data:application/pdf;base64," + res.data.fileBinaryData.data;
+                    this.setState({ toDownload: res.data.fileBinaryData.data})    
                     this.setState({ cv2: res.data });
                     this.setState({ cv2: res.data });
                 }
@@ -63,6 +69,8 @@ class CvList extends Component {
             .then(res => {
 
                 if (res.data.fileBinaryData != null) {
+                    const toShow = "data:application/pdf;base64," + res.data.fileBinaryData.data;
+                    this.setState({ toDownload: res.data.fileBinaryData.data})                    
                     this.setState({ cv3: res.data });
                     this.setState({ cv3: res.data });
                 }
@@ -97,7 +105,12 @@ class CvList extends Component {
         fetch('/api/trainee/cvupload/' + id + '/' + sessionStorage.getItem('id') ,  {
             method: 'POST',
             body: formData
-        })
+        }).then(res => {
+            console.log(res)
+            if (res.ok) {
+                window.location.reload();
+             }
+            })
 
         if(cv.fileName == "file not added")
         {
@@ -116,15 +129,14 @@ class CvList extends Component {
                   email: sessionStorage.getItem('userName')  
                 }
                 ).then(cv.fileName = "File uploaded").then(this.forceUpdate());
-        }
-            
-        
+        } ;
 
 
-            
-        ;
+    }
 
-
+    donwloadFile = () => {
+        var blob = new Blob([window.atob(this.state.toDownload)], { type: 'application/pdf"'});
+        FileSaver.saveAs(blob, "this.pdf");
     }
 
     changePdf = (id) =>{
@@ -152,15 +164,16 @@ class CvList extends Component {
         console.log(this.state.cv1);
         return (
             <div >
-                <div class="infoContainer">
+                <Logout/>
+                <div class="cvContainer">
                     <iframe src={this.state.file}/>
                 </div>
-                <div class="listContainer">
+                <div class="cvlistContainer" background-color="white">
                     <h4>
 
                       CV List
                     </h4>
-                    <table class="table table-stripe">
+                    <Table class="table table-stripe">
                         <thead>
                             <tr>
                                 <th>File Name</th>
@@ -190,9 +203,12 @@ class CvList extends Component {
                                <td> <input id="upload" ref="upload" type="file" onChange={(event) => {this.onChange(event,3, this.state.cv3) }} onClick={(event) => {event.target.value = null}} /></td>
                             </tr>
                         </tbody>
-                    </table>
+                    </Table>
+                    
+                    <Button onClick={(e)=>this.donwloadFile(e)} >Download Selected</Button>
+                               
                 </div>
-                              <div class="rightContainer">
+                <div class="rightContainer">
                                     
 
                 </div>

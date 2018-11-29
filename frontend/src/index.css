@@ -6,8 +6,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: linear-gradient( rgb(175, 150, 185, 0.3), rgb(180, 145, 200, 0.4));
-
+  background-image: url("simple.jpeg");
     background-repeat: no-repeat;
     background-attachment: fixed;
 
@@ -20,8 +19,6 @@ code {
 iframe {
     height: 100%;
     width: 400px;
-   padding-left: 15px;
-
 }
 
 
@@ -32,8 +29,5 @@ iframe {
   
 }
 
-.panel-title {
-  border-bottom: 0;
-  margin: 25px 0 0;
-}
+
 

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import {onChange} from './helpers/Helper';
-
+import Logout from './Logout';
 class Create extends Component {
   emptyValues = {
       userName: '',
@@ -37,7 +37,8 @@ class Create extends Component {
   render() {
     const { details} = this.state;
     return (
-      <div class="container">
+      <div >
+      <Logout/>
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title">

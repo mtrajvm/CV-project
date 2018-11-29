@@ -67,21 +67,28 @@ class Login extends Component {
                 'Authorization': 'Basic ' + base64.encode(this.state.email + ":" + this.state.password)
             },
             body: JSON.stringify(details),
-        }).then(response => response.json())
-            .then(data =>{
-                if(data.accountType!=null){
-                        sessionStorage.setItem('accounType', data.accountType);
-                        sessionStorage.setItem('id', data.id);
-                        sessionStorage.setItem('userName', data.userName);
-                        sessionStorage.setItem('firstName', data.firstName);
-                        sessionStorage.setItem('surName', data.surName);
-                }
+        }).then(response => {
+            if(response.status==200){
+            var toRet = response.json();
+            return toRet;
+            }else{
+                return false;
+            }
+        }).then(data=>{            
+            if(data.accountType!=null){
+                sessionStorage.setItem('accounType', data.accountType);
+                sessionStorage.setItem('id', data.id);
+                sessionStorage.setItem('userName', data.userName);
+                sessionStorage.setItem('firstName', data.firstName);
+                sessionStorage.setItem('surName', data.surName);
+                
                 this.props.history.push({
                     pathname: '/List',
                     details: data
 
-                })});
-
+                })
+        }})
+            
     }
 
     submitForm = (e) => {
@@ -99,11 +106,9 @@ class Login extends Component {
     render() {
         const { email, password } = this.state;
         return (
-            <Container class="changingContainer">
+            <div class="login">
 
-                <h3 class="panel-title">
-                    LOGIN PAGE
-            </h3>
+         
 
 
                 <Form className="form" onSubmit={(event) => this.submitForm(event)}>
@@ -164,7 +169,7 @@ class Login extends Component {
                     <br></br>
                     <Link to="/Register"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Create an account</Link>
                 </center>
-            </Container>
+            </div>
         );
     }
 }

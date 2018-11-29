@@ -34,33 +34,17 @@
 
 
 
-.mainContainer {
-
-    width: 100%;
-    height: 1000px;
-   
-
-}
-.listContainer {
-    margin-top : 50px;
-    width: 52%;
-    height: 650px;
-    float: left;
-}
 
 .logout{
-  margin-left: 1000;
+  margin-left: 90%;
 }
 
-.cvContainer{
 
-
-}
 
 .table-wrapper-scroll-y {
 display: block;
-max-height: 100%;
-max-width: 100%;
+max-height: 95%;
+max-width: 90%;
 overflow-y: auto;
 -ms-overflow-style: -ms-autohiding-scrollbar;
 }
@@ -68,6 +52,63 @@ overflow-y: auto;
 .drop{
   width:100px;
 }
+
+.mainContainer {
+
+  width: 100%;
+  height: 100%;
+ 
+
+}
+.edit{
+  background-color:white;
+  -webkit-box-shadow: 6px 10px 55px -9px rgba(0,0,0,0.75);
+-moz-box-shadow: 6px 10px 55px -9px rgba(0,0,0,0.75);
+box-shadow: 6px 10px 55px -9px rgba(0,0,0,0.75);
+padding:10px;
+  margin-top : 50px;
+  width: 60%;
+  height: 450px;
+  float: left;
+}
+.smallList{
+  background-color:white;
+  -webkit-box-shadow: 6px 10px 55px -9px rgba(0,0,0,0.75);
+-moz-box-shadow: 6px 10px 55px -9px rgba(0,0,0,0.75);
+box-shadow: 6px 10px 55px -9px rgba(0,0,0,0.75);
+padding:10px;
+  margin-top : 50px;
+  width: 40%;
+  height: 650px;
+  float: left;
+}
+
+.login{
+  background-color:white;
+  -webkit-box-shadow: 6px 10px 55px -9px rgba(0,0,0,0.75);
+-moz-box-shadow: 6px 10px 55px -9px rgba(0,0,0,0.75);
+box-shadow: 6px 10px 55px -9px rgba(0,0,0,0.75);
+padding:10px;
+margin-left:35%;
+  margin-top : 50px;
+  width: 40%;
+  height: 350px;
+  float: left;
+
+}
+.listContainer {
+  background-color:white;
+  -webkit-box-shadow: 6px 10px 55px -9px rgba(0,0,0,0.75);
+-moz-box-shadow: 6px 10px 55px -9px rgba(0,0,0,0.75);
+box-shadow: 6px 10px 55px -9px rgba(0,0,0,0.75);
+  margin-top : 50px;
+  width: 63%;
+  height: 700px;
+  padding:15px;
+  padding-left: 50px;
+  float: left;
+}
+
 .infoContainer {
     margin-top: 100px;
     width: 20%;
@@ -75,10 +116,28 @@ overflow-y: auto;
     float: left;
 }
 
+.cvContainer{
+  margin-top : 50px;
+  width: 30%;
+  height: 650px;
+  padding-left: 15px;
+  float: left;
+}
+.cvlistContainer{
+  background-color:white;
+  -webkit-box-shadow: 6px 10px 55px -9px rgba(0,0,0,0.75);
+  -moz-box-shadow: 6px 10px 55px -9px rgba(0,0,0,0.75);
+  box-shadow: 6px 10px 55px -9px rgba(0,0,0,0.75);
+  margin-top : 50px;
+  width: 40%;
+  height: 450px;
+  padding:20px;
+  float: left;
+}
 .rightContainer {
     margin-top: 50px;
     width:25%;
-    height: 600px;
+    height: 650px;
     float: left;
 }
 

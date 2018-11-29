@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-
+import Logout from './Logout';
 class Show extends Component {
 
   constructor(props) {
@@ -30,7 +30,8 @@ class Show extends Component {
 
   render() {
     return (
-      <div class="container">
+      <div >
+        <Logout/>
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title">
