@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import {Button, Container, Form, FormGroup, Input, Label} from 'reactstrap';
+import Logout from './Logout';
 class Edit extends Component {
 
     emptyValues = {
@@ -49,6 +50,7 @@ class Edit extends Component {
     const { details} = this.state;
     return (
       <div >
+        <Logout/>
       <div class="infoContainer">
                 </div>
         <div class="edit">

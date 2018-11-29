@@ -10,6 +10,7 @@ import {
 } from 'reactstrap';
 import InformationComponent from './InformationComponent';
 import { Document } from 'react-pdf'
+import Logout from './Logout';
 
 class TraineeManUserList extends Component {
 
@@ -50,6 +51,7 @@ class TraineeManUserList extends Component {
 
         return (
             <div >
+                <Logout/>
                 <div class="infoContainer">
                     <InformationComponent userName={this.state.hoveredUser} />
                 </div>

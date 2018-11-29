@@ -10,7 +10,7 @@ import {
 } from 'reactstrap';
 import InformationComponent from './InformationComponent';
 import { Document } from 'react-pdf'
-
+import Logout from './Logout';
 class SalesUserList extends Component {
 
     constructor(props) {
@@ -49,6 +49,7 @@ class SalesUserList extends Component {
 
         return (
             <div >
+                <Logout/>
                 <div class="infoContainer">
                     <InformationComponent userName={this.state.hoveredUser} />
                 </div>

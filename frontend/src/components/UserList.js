@@ -9,6 +9,7 @@ import {
     Button, FormFeedback, Dropdown, DropdownToggle, DropdownMenu, DropdownItem
 } from 'reactstrap';
 import InformationComponent from './InformationComponent';
+import Logout from './Logout';
 class UserList extends Component {
 
     constructor(props) {
@@ -82,6 +83,7 @@ class UserList extends Component {
 
         return (
             <div>
+                <Logout/>
                 <div class="infoContainer">
                 
                 </div>

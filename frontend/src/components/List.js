@@ -46,9 +46,6 @@ class List extends Component {
         return (       
             
            <div> 
-            <div class="logout">
-                    <Logout/>
-                </div>
             <div class="changingContainer">
 
                 {list}

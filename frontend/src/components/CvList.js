@@ -11,6 +11,7 @@ import {
 import InformationComponent from './InformationComponent';
 import { Document } from 'react-pdf'
 import FileSaver from 'file-saver';
+import Logout from './Logout';
 class CvList extends Component {
 
     constructor(props) {
@@ -163,6 +164,7 @@ class CvList extends Component {
         console.log(this.state.cv1);
         return (
             <div >
+                <Logout/>
                 <div class="cvContainer">
                     <iframe src={this.state.file}/>
                 </div>
