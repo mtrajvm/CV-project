@@ -53,6 +53,7 @@ class CvList extends Component {
             .then(res => {
 
                 if (res.data.fileBinaryData != null) {
+                    const toShow = "data:application/pdf;base64," + res.data.fileBinaryData.data;
                     this.setState({ cv2: res.data });
                     this.setState({ cv2: res.data });
                 }
@@ -63,6 +64,7 @@ class CvList extends Component {
             .then(res => {
 
                 if (res.data.fileBinaryData != null) {
+                    const toShow = "data:application/pdf;base64," + res.data.fileBinaryData.data;
                     this.setState({ cv3: res.data });
                     this.setState({ cv3: res.data });
                 }
@@ -97,7 +99,12 @@ class CvList extends Component {
         fetch('/api/trainee/cvupload/' + id + '/' + sessionStorage.getItem('id') ,  {
             method: 'POST',
             body: formData
-        })
+        }).then(res => {
+            console.log(res)
+            if (res.ok) {
+                window.location.reload();
+             }
+            })
 
         if(cv.fileName == "file not added")
         {
@@ -116,13 +123,7 @@ class CvList extends Component {
                   email: sessionStorage.getItem('userName')  
                 }
                 ).then(cv.fileName = "File uploaded").then(this.forceUpdate());
-        }
-            
-        
-
-
-            
-        ;
+        } ;
 
 
     }

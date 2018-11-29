@@ -11,6 +11,7 @@ import {
 import InformationComponent from './InformationComponent';
 import { Document } from 'react-pdf'
 import Logout from './Logout'
+import FileSaver from 'file-saver';
 
 class TraineeManCvList extends Component {
 
@@ -41,9 +42,8 @@ class TraineeManCvList extends Component {
 
             if (res.data.fileBinaryData != null) {
                 const toShow = "data:application/pdf;base64," + res.data.fileBinaryData.data;
-                console.log(res.data.fileFlag)
+                this.setState({ toDownload: res.data.fileBinaryData.data })
                 this.setState({ cv1: res.data });
-                console.log(this.state.cv1.fileFlag)
                 this.setState({ file: toShow });
             }
             
@@ -55,7 +55,8 @@ class TraineeManCvList extends Component {
 
                 if (res.data.fileBinaryData != null) {
                     const toShow = "data:application/pdf;base64," + res.data.fileBinaryData.data;
-                    this.setState({ cv2: res.data });
+                    this.setState({ toDownload: res.data.fileBinaryData.data })
+                    this.setState({ cv1: res.data });
                     this.setState({ file: toShow });
                 }
             });
@@ -66,10 +67,17 @@ class TraineeManCvList extends Component {
 
                 if (res.data.fileBinaryData != null) {
                     const toShow = "data:application/pdf;base64," + res.data.fileBinaryData.data;
-                    this.setState({ cv3: res.data });
+                    this.setState({ toDownload: res.data.fileBinaryData.data })
+                    this.setState({ cv1: res.data });
                     this.setState({ file: toShow });
                 }
             });
+    }
+
+
+    donwloadFile = () => {
+        var blob = new Blob([window.atob(this.state.toDownload)], { type: 'application/pdf"' });
+        FileSaver.saveAs(blob, "this.pdf");
     }
 
     async onChange(e,id) {
@@ -102,6 +110,9 @@ class TraineeManCvList extends Component {
                             <tr>
                                 <th>File Name</th>
                                 <th>Flag</th>
+                                <td>
+                                    <Button onClick={(e) => this.donwloadFile(e)} >Download Selected</Button>
+                                </td>
                             </tr>
                         </thead>
                         <tbody >

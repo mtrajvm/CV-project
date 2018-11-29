@@ -44,6 +44,7 @@ class TraineeManCvList extends Component {
         .then(res => {
             if (res.data.fileBinaryData != null) {
                 const toShow = "data:application/pdf;base64," + res.data.fileBinaryData.data;
+                this.setState({ toDownload: res.data.fileBinaryData.data})
                 this.setState({ cv1: res.data });
                 this.setState({ file: toShow });
             }        
@@ -55,6 +56,7 @@ class TraineeManCvList extends Component {
 
                 if (res.data.fileBinaryData != null) {
                     const toShow = "data:application/pdf;base64," + res.data.fileBinaryData.data;
+                    this.setState({ toDownload: res.data.fileBinaryData.data })
                     this.setState({ cv2: res.data });
                     this.setState({ file: toShow });
                 }
@@ -66,6 +68,7 @@ class TraineeManCvList extends Component {
 
                 if (res.data.fileBinaryData != null) {
                     const toShow = "data:application/pdf;base64," + res.data.fileBinaryData.data;
+                    this.setState({ toDownload: res.data.fileBinaryData.data })
                     this.setState({ cv3: res.data });
                     this.setState({ file: toShow });
                 }
@@ -78,10 +81,8 @@ class TraineeManCvList extends Component {
     }
 
 
-    donwloadFile= () =>{
-        console.log("hihi")
-        console.log(this.state.file)
-        var blob = new Blob([this.state.file], {type: "application/pdf"});
+    donwloadFile = () => {
+        var blob = new Blob([window.atob(this.state.toDownload)], { type: 'application/pdf"'});
         FileSaver.saveAs(blob, "this.pdf");
     }
 
