@@ -91,9 +91,9 @@ class TraineeManCvList extends Component {
 
     changeFlag = (flag, cv, thisCV) => {
         axios.put('/api/traineemanager/cvflag/'+ cv +'/'+ this.props.location.state.userData.id +'/'+ flag )
-        .then(thisCV.fileFlag = flag).then(this.forceUpdate())
-            ;
-
+        .then(()=>{thisCV.fileFlag = flag;
+        this.forceUpdate();
+        })
     }
 
     onRadioBtnClick(rSelected) {
